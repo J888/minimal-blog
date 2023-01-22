@@ -11,17 +11,20 @@ posts/
 ```
 
 Example:
-```
-LOCAL_PATH=/Users/me/Documents/staticsitefiles/mysite yarn run dev
+
+```shell
+$ LOCAL_PATH=/Users/me/Documents/staticsitefiles/mysite yarn run dev
 ```
 
 ### Build For Deployment
 
-For the real deployment, the posts get pulled from an S3 bucket.
+For a deployment, the posts get pulled from an S3 bucket.
 
-That's because we don't want to hardcode the files in this repo.
+We do this to avoid hardcoding the posts and site configuration in the repo. By eliminating hardcoding, we're making sure this site is re-usable.
 
-The following env vars must be set to access files from the bucket:
+The following env vars must be set to access files from the bucket.
+
+If you're deploying on a platform like Netlify or Heroku, that means you need to set these in the build config. Note that the app itself is entirely static and currently does not run any js on the server at all, which is why it's so fast, and these env vars are only used at build time.
 ```
 AWS_ACCESS_KEY_ID=xyz123
 AWS_SECRET_ACCESS_KEY=abc567
@@ -29,3 +32,10 @@ AWS_DEFAULT_REGION=us-east-2
 AWS_BUCKET_NAME=my-static-site-bucket
 ```
 
+Build and run the next app
+
+```shell
+$ yarn run build
+
+$ yarn run start
+```
