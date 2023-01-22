@@ -21,8 +21,11 @@ const client = new S3Client({
 const getPostsTar = async () => {
   var file = fs.createWriteStream(`./tmp/${SITE_TAR_NAME}`);
 
+  const commandConfig = { Bucket: process.env.AWS_BUCKET_NAME, Key: SITE_TAR_NAME, ContentType: 'application/gzip' };
+  console.log(`Getting posts with config`, commandConfig);
+
   return new Promise(async (resolve, reject) => {
-    let response = await client.send(new GetObjectCommand({ Bucket: process.env.AWS_BUCKET_NAME, Key: SITE_TAR_NAME, ContentType: 'application/gzip' }));
+    let response = await client.send(new GetObjectCommand(commandConfig));
     
     const readStream = response.Body;
 
