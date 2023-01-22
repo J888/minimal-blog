@@ -1,38 +1,31 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+### Local Development
 
-## Getting Started
+The `LOCAL_PATH` env var must be set to a directory on your local system that has structure
 
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+```
+conf.yml
+posts/
+   md_file1.md
+   md_file2.md
+   md_file3.md
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Example:
+```
+LOCAL_PATH=/Users/me/Documents/staticsitefiles/mysite yarn run dev
+```
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+### Build For Deployment
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+For the real deployment, the posts get pulled from an S3 bucket.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+That's because we don't want to hardcode the files in this repo.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+The following env vars must be set to access files from the bucket:
+```
+AWS_ACCESS_KEY_ID=xyz123
+AWS_SECRET_ACCESS_KEY=abc567
+AWS_DEFAULT_REGION=us-east-2
+AWS_BUCKET_NAME=my-static-site-bucket
+```
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.

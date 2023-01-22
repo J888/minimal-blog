@@ -1,11 +1,56 @@
 .main {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  // justify-content: space-between;
   align-items: center;
-  padding: 6rem;
+  /* padding: 6rem; */
   min-height: 100vh;
 }
+
+.postList {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.siteDesc {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  & p {
+    padding: 0;
+  }
+}
+
+// mobile first design - these apply when screen is bigger than 700px!
+@media (min-width: 700px) {
+
+  .postList {
+    display: flex;
+    flex-direction: row;
+    flex-flow: row wrap;
+    width: 100%;
+    
+
+    & div {
+      margin-right: 1rem;
+    }
+  }
+
+  .siteDesc {
+    flex-direction: row;
+
+    & p {
+      padding: 0 4.4rem 0 0;
+  
+      &:last-child {
+        padding: 0;
+      }
+    }
+  }
+  
+}
+
 
 .description {
   display: inherit;
@@ -32,18 +77,12 @@
   background-color: rgba(var(--callout-rgb), 0.5);
   border: 1px solid rgba(var(--callout-border-rgb), 0.3);
   border-radius: var(--border-radius);
+  line-height: 1.2rem;
 }
 
 .code {
   font-weight: 700;
   font-family: var(--font-mono);
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(25%, auto));
-  width: var(--max-width);
-  max-width: 100%;
 }
 
 .card {
@@ -78,6 +117,7 @@
   align-items: center;
   position: relative;
   padding: 4rem 0;
+  width: 100%;
 }
 
 .center::before {
@@ -179,13 +219,6 @@
     padding: 4rem;
   }
 
-  .grid {
-    grid-template-columns: 1fr;
-    margin-bottom: 120px;
-    max-width: 320px;
-    text-align: center;
-  }
-
   .card {
     padding: 1rem 2.5rem;
   }
@@ -268,11 +301,3 @@
   }
 }
 
-@keyframes rotate {
-  from {
-    transform: rotate(360deg);
-  }
-  to {
-    transform: rotate(0deg);
-  }
-}

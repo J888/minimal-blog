@@ -1,0 +1,13 @@
+.main {
+  flex-direction: column;
+
+}
+
+@media (min-width: 700px) {
+  .main {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    background-color: rgb(0, 0, 0);
+  }
+}

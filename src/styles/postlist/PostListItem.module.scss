@@ -1,0 +1,42 @@
+$backgroundColor: rgb(240 240 240);
+$adjustedBackgroundColor: adjust-color($color: $backgroundColor, $red: 10, $green: 10, $blue: 10, $alpha: 1.0);
+$highlightColor: rgb(195, 212, 249);
+$bottomMargin: 0.4rem;
+.main {
+  background-color: $backgroundColor;
+  
+  // border: solid rgb(189, 189, 189) 0.1rem;
+  border-radius: 0.2rem;
+  border-left: solid $backgroundColor 0.2rem;
+  border-bottom: solid $highlightColor 0.2rem;
+  font-size: 0.77rem;
+
+  transition: border-left-color 0.8s ease;
+
+  &:hover {
+    background-color: $adjustedBackgroundColor;
+    border-left: solid $highlightColor 0.2rem;
+    border-bottom: none;
+
+    cursor: pointer;
+  }
+  padding: 0.1rem 0.8rem 0.3rem 0.9rem;
+  min-height: 8rem;
+  margin: 0 0.4rem $bottomMargin 0;
+}
+
+.title {
+  font-family: 'Noto Serif', serif;
+  font-size: 1.7rem;
+}
+
+.date {
+  color:rgb(123, 123, 123);
+}
+
+@media (min-width: 700px) {
+  .main {
+    min-width: 26rem;
+
+  }
+}
