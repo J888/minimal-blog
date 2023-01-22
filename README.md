@@ -26,9 +26,8 @@ The following env vars must be set to access files from the bucket.
 
 If you're deploying on a platform like Netlify or Heroku, that means you need to set these in the build config. Note that the app itself is entirely static and currently does not run any js on the server at all, which is why it's so fast, and these env vars are only used at build time.
 ```
-AWS_ACCESS_KEY_ID=xyz123
-AWS_SECRET_ACCESS_KEY=abc567
-AWS_DEFAULT_REGION=us-east-2
+MY_AWS_KEY_ID=xyz123
+MY_AWS_SECRET_ACCESS_KEY=abc567
 AWS_BUCKET_NAME=my-static-site-bucket
 ```
 

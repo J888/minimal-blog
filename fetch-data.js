@@ -10,7 +10,13 @@ const SITE_TAR_NAME = `site.tar.gz`;
 
 const { S3Client, GetObjectCommand } = require("@aws-sdk/client-s3"); // CommonJS import
 const REGION = 'us-east-2';
-const client = new S3Client({ region: REGION });
+const client = new S3Client({
+  region: REGION,
+  credentials: {
+    accessKeyId: process.env.MY_AWS_KEY_ID,
+    secretAccessKey: process.env.MY_AWS_SECRET_ACCESS_KEY
+  }
+});
 
 const getPostsTar = async () => {
   var file = fs.createWriteStream(`./tmp/${SITE_TAR_NAME}`);
