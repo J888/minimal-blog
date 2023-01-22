@@ -20,7 +20,7 @@ $ LOCAL_PATH=/Users/me/Documents/staticsitefiles/mysite yarn run dev
 
 For a deployment, the posts get pulled from an S3 bucket.
 
-We do this to avoid hardcoding the posts and site configuration in the repo. By eliminating hardcoding, we're making sure this site is re-usable.
+We do this to avoid hardcoding the posts and site configuration in the repo. By eliminating hardcoding, we're making sure this repo is a re-usable template no matter what topics you want to blog about. 
 
 The following env vars must be set to access files from the bucket.
 
