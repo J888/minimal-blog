@@ -6,6 +6,9 @@ import React from "react";
 import ReactMarkdown from "react-markdown";
 import { AiTwotoneCalendar } from "react-icons/ai";
 
+import { monokaiSublime } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
+import SyntaxHighlighter from "react-syntax-highlighter/dist/cjs/default-highlight";
+
 type Props = {
   conf: any;
   post: any;
@@ -31,7 +34,31 @@ const Post = ({ conf, post }: Props) => {
     <Spacer size="sm"/>
 
     <div className={styles.body}>
-      <ReactMarkdown>{post.body}</ReactMarkdown>
+      <ReactMarkdown
+
+        components={{
+          code({ node, inline, className, children, ...props }) {
+            const match = /language-(\w+)/.exec(className || "");
+
+            return !inline && match ? (
+              <SyntaxHighlighter
+                // @ts-expect-error -- I don't know what this is
+                style={monokaiSublime}
+                PreTag="div"
+                language={match[1]}
+                children={String(children).replace(/\n$/, "")}
+                {...props}
+              />
+            ) : (
+              <code className={className ? className : ""} {...props}>
+                {children}
+              </code>
+            );
+          }
+        }}
+      >
+        {post.body}
+      </ReactMarkdown>
     </div>
     <Spacer size="sm"/>
 
