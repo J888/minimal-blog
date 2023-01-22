@@ -4,21 +4,19 @@
 // that way we can re use this repo and just switch out the bucket
 
 const fs = require('fs');
-const path = require('path');
-const fm = require('front-matter');
-const yaml = require('js-yaml');
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
+const SITE_TAR_NAME = `site.tar.gz`;
 
-const { S3Client, GetObjectCommand, ListObjectsV2Command, PutObjectCommand, DeleteObjectCommand } = require("@aws-sdk/client-s3"); // CommonJS import
+const { S3Client, GetObjectCommand } = require("@aws-sdk/client-s3"); // CommonJS import
 const REGION = 'us-east-2';
 const client = new S3Client({ region: REGION });
 
 const getPostsTar = async () => {
-  var file = fs.createWriteStream('./tmp/posts.tar.gz');
+  var file = fs.createWriteStream(`./tmp/${SITE_TAR_NAME}`);
 
   return new Promise(async (resolve, reject) => {
-    let response = await client.send(new GetObjectCommand({ Bucket: process.env.AWS_BUCKET_NAME, Key: `posts.tar.gz`, ContentType: 'application/gzip' }));
+    let response = await client.send(new GetObjectCommand({ Bucket: process.env.AWS_BUCKET_NAME, Key: SITE_TAR_NAME, ContentType: 'application/gzip' }));
     
     const readStream = response.Body;
 
@@ -35,15 +33,19 @@ const getPostsTar = async () => {
 }
 
 (async () => {
-  await exec(`rm -r ./tmp`);
 
-  if (!fs.existsSync("tmp")) {
-    fs.mkdirSync("tmp");
+  // clean start
+  if (fs.existsSync("tmp")) {
+    await exec(`rm -r ./tmp`);
   }
+  
+  // make the tmp folder where we'll pull site data into
+  fs.mkdirSync("tmp");
   
   await getPostsTar();
 
-  await exec(`tar -xf ./tmp/posts.tar.gz`);
+  await exec(`tar -xf ./tmp/${SITE_TAR_NAME}`);
   await exec(`mv ./posts ./tmp`);
-  await exec(`rm ./tmp/posts.tar.gz`);
+  await exec(`mv ./conf.yml ./tmp`);
+  await exec(`rm ./tmp/${SITE_TAR_NAME}`);
 })()
