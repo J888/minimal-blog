@@ -1,6 +1,6 @@
-$backgroundColor: rgb(240 240 240);
+$backgroundColor: rgb(245, 242, 239);
 $adjustedBackgroundColor: adjust-color($color: $backgroundColor, $red: 10, $green: 10, $blue: 10, $alpha: 1.0);
-$highlightColor: rgb(195, 212, 249);
+$highlightColor: rgb(250, 249, 222);
 $bottomMargin: 0.4rem;
 .main {
   background-color: $backgroundColor;
@@ -28,6 +28,7 @@ $bottomMargin: 0.4rem;
 .title {
   font-family: 'Noto Serif', serif;
   font-size: 1.7rem;
+  color:rgb(73, 73, 73);
 }
 
 .date {

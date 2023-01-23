@@ -16,6 +16,7 @@ const PostListItem = ({ post }: PostListItemProps) => {
   return (
     <div className={styles.main}>
       <h2 className={styles.title}>{titleShort}</h2>
+      <p className={styles.category}>#{post.category}</p>
       <p className={styles.date}>{new Date(post.createdAt).toLocaleDateString()}</p>
       <p>{descShort}</p>
     </div>

@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const fm = require('front-matter');
 const yaml = require('js-yaml');
+const estimateReadingTime = require('reading-time');
 const BUILD_TIME_POSTS_DIR = `tmp/posts`;
 const BUILD_TIME_CONF_PATH = `tmp/conf.yml`;
 const LOCAL_PATH_MISSING_ERROR = `\n\n\n\n>>>>>>>> LOCAL_PATH env var required <<<<<<<<\n\n\n\n`;
@@ -36,15 +37,31 @@ export const getPostsFromLocation = () => {
     let parsed = fm(fileContents);
     posts.push(
       {
+        tags: parsed.attributes.tags?.split(',') || [],
         title: parsed.attributes.title,
         category: parsed.attributes.category,
         createdAt: parsed.attributes.createdAt,
         description: parsed.attributes.description,
         slug: parsed.attributes.slug,
-        body: parsed.body
+        body: parsed.body,
+        readingTimeMinutes: estimateReadingTime(parsed.body).text
       }
     );
   }
+
+  // sort by date (most recently created will be first in the list)
+  posts.sort((a,b) => {
+    if (new Date(a.createdAt) < new Date(b.createdAt)) {
+      return 1;
+    }
+
+    if (new Date(a.createdAt) > new Date(b.createdAt)) {
+      return -1;
+    }
+
+    return 0;
+  });
+
   return posts;
 }
 

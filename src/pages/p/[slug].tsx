@@ -8,6 +8,7 @@ import { AiTwotoneCalendar } from "react-icons/ai";
 
 import { monokaiSublime } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 import SyntaxHighlighter from "react-syntax-highlighter/dist/cjs/default-highlight";
+import TagGroup from "@/components/tagging/TagGroup";
 
 type Props = {
   conf: any;
@@ -23,9 +24,19 @@ const Post = ({ conf, post }: Props) => {
       <h2 className={styles.title}>{post.title}</h2>
       <span className={styles.description}>{post.description}</span>
       <Spacer size="xxs"/>
+      
+      <div style={{width: '30rem'}}>
+        <TagGroup tags={post.tags}/>
+
+      </div>
+      <Spacer size="sm"/>
+
+      <span className={styles.readTime}>~{post.readingTimeMinutes}</span>
+      
+      <Spacer size="xxs"/>
 
       <div>
-        <AiTwotoneCalendar style={{fontSize: '1.5rem'}}/> <span className={styles.date}>{new Date(post.createdAt).toDateString()}</span>
+        <AiTwotoneCalendar style={{fontSize: '1.2rem'}}/> <span className={styles.date}>{new Date(post.createdAt).toDateString()}</span>
       </div>
       
     
