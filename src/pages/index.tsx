@@ -27,7 +27,7 @@ const Home = ({ conf, posts }: any) => {
           <Spacer size="xxs" />
           <div className={styles.postList}>
             {posts.map((post: any, i: number) => (
-              <Link href={"/p/" + post.slug} key={`linktopost-${i}`}>
+              <Link href={"/p/" + post.metadata.slug} key={`linktopost-${i}`}>
                 <PostListItem
                   post={post}
                 />

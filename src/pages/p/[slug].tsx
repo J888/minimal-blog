@@ -9,6 +9,7 @@ import { AiTwotoneCalendar } from "react-icons/ai";
 import { monokaiSublime } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 import SyntaxHighlighter from "react-syntax-highlighter/dist/cjs/default-highlight";
 import TagGroup from "@/components/tagging/TagGroup";
+import Image from "next/image";
 
 type Props = {
   conf: any;
@@ -16,27 +17,28 @@ type Props = {
 };
 
 const Post = ({ conf, post }: Props) => {
-  return <SiteWrapper conf={conf} title={post.title + ' | ' + conf.site.name}>
+  let metadata = post.metadata;
+  return <SiteWrapper conf={conf} title={metadata.title + ' | ' + conf.site.name}>
     <Spacer size="sm"/>
 
     <div className={styles.titleDescContainer}>
 
-      <h2 className={styles.title}>{post.title}</h2>
-      <span className={styles.description}>{post.description}</span>
+      <h2 className={styles.title}>{metadata.title}</h2>
+      <span className={styles.description}>{metadata.description}</span>
       <Spacer size="xxs"/>
       
       <div style={{width: '30rem'}}>
-        <TagGroup tags={post.tags}/>
+        <TagGroup tags={metadata.tags}/>
 
       </div>
       <Spacer size="sm"/>
 
-      <span className={styles.readTime}>~{post.readingTimeMinutes}</span>
+      <span className={styles.readTime}>~{metadata.readingTimeMinutes}</span>
       
       <Spacer size="xxs"/>
 
       <div>
-        <AiTwotoneCalendar style={{fontSize: '1.2rem'}}/> <span className={styles.date}>{new Date(post.createdAt).toDateString()}</span>
+        <AiTwotoneCalendar style={{fontSize: '1.2rem'}}/> <span className={styles.date}>{new Date(metadata.createdAt).toDateString()}</span>
       </div>
       
     
@@ -45,31 +47,48 @@ const Post = ({ conf, post }: Props) => {
     <Spacer size="sm"/>
 
     <div className={styles.body}>
-      <ReactMarkdown
+      {
+        post.parts.map((part, i) => {
 
-        components={{
-          code({ node, inline, className, children, ...props }) {
-            const match = /language-(\w+)/.exec(className || "");
+          if (part.type === "MARKDOWN") {
+            return (
+              <ReactMarkdown
+                components={{
+                  code({ node, inline, className, children, ...props }) {
+                    const match = /language-(\w+)/.exec(className || "");
 
-            return !inline && match ? (
-              <SyntaxHighlighter
-                // @ts-expect-error -- I don't know what this is
-                style={monokaiSublime}
-                PreTag="div"
-                language={match[1]}
-                children={String(children).replace(/\n$/, "")}
-                {...props}
-              />
-            ) : (
-              <code className={className ? className : ""} {...props}>
-                {children}
-              </code>
+                    return !inline && match ? (
+                      <SyntaxHighlighter
+                        // @ts-expect-error -- I don't know what this is
+                        style={monokaiSublime}
+                        PreTag="div"
+                        language={match[1]}
+                        children={String(children).replace(/\n$/, "")}
+                        {...props}
+                      />
+                    ) : (
+                      <code className={className ? className : ""} {...props}>
+                        {children}
+                      </code>
+                    );
+                  },
+                }}
+              >
+                {part.body}
+              </ReactMarkdown>
             );
-          }
-        }}
-      >
-        {post.body}
-      </ReactMarkdown>
+          } else if (part.type === 'IMAGE') {
+            return (
+              <Image
+                alt={'testalt'}
+                src={part.url}
+                height={part.dimensions.height}
+                width={part.dimensions.width}
+              />
+            )
+          };
+        })
+      }
     </div>
     <Spacer size="sm"/>
 
@@ -91,9 +110,10 @@ export async function getStaticProps({ params, preview = false, previewData }: a
 
 export async function getStaticPaths() {
   const posts = getPostsFromLocation();
+  console.log(posts)
 
   return {
-    paths: posts.map(p => ({ params: { slug: p.slug } })),
+    paths: posts.map(p => ({ params: { slug: p.metadata.slug } })),
     fallback: false,
   };
 }

@@ -23,6 +23,15 @@ module.exports = async (phase) => {
   return {
     reactStrictMode: true,
     env,
-    // images,
+    images: {
+      remotePatterns: [
+        {
+          protocol: 'https',
+          hostname: 'sdt-pub1.s3.us-east-2.amazonaws.com',
+          port: '',
+          pathname: '/imgs/*.jpg',
+        },
+      ],
+    },
   }
 }

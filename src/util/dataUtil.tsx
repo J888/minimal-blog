@@ -30,32 +30,82 @@ export const getPostsFromLocation = () => {
   const postsDirectory = process.env.DEV_MODE ? `${process.env.LOCAL_PATH}/posts` : BUILD_TIME_POSTS_DIR;
 
   let posts = [];
-  const mdFiles = fs.readdirSync(postsDirectory);
-  for (let i = 0; i < mdFiles.length; i++) {
-    let mdFile = mdFiles[i];
-    const fileContents = fs.readFileSync(path.join(postsDirectory, mdFile), 'utf8');
-    let parsed = fm(fileContents);
-    posts.push(
-      {
-        tags: parsed.attributes.tags?.split(',') || [],
-        title: parsed.attributes.title,
-        category: parsed.attributes.category,
-        createdAt: parsed.attributes.createdAt,
-        description: parsed.attributes.description,
-        slug: parsed.attributes.slug,
-        body: parsed.body,
-        readingTimeMinutes: estimateReadingTime(parsed.body).text
+  const postDirectories = fs.readdirSync(postsDirectory);
+  console.log(postDirectories);
+  for (let i = 0; i < postDirectories.length; i++) {
+    let postDir = postDirectories[i];
+
+    let partsFiles = fs.readdirSync(path.join(postsDirectory, postDir), 'utf8');
+    let post: any = {
+      metadata: {},
+      parts: []
+    };
+
+    // collect all the parts
+    for (let k = 0; k < partsFiles.length; k++) {
+      let partFile = partsFiles[k];
+  
+      let fileContents = fs.readFileSync(path.join(postsDirectory, postDir, partFile), 'utf8');
+
+
+      // md file
+      if (partFile.endsWith('.md')) {
+        
+        // the first part file will always contain the front matter
+        if (partFile === 'p1.md') {
+          let parsed = fm(fileContents);
+          post.metadata = {
+            tags: parsed.attributes.tags?.split(',') || [],
+            title: parsed.attributes.title,
+            category: parsed.attributes.category,
+            createdAt: parsed.attributes.createdAt,
+            description: parsed.attributes.description,
+            slug: parsed.attributes.slug,
+            readingTimeMinutes: estimateReadingTime(parsed.body).text
+          };
+
+          post.parts.push({
+            type: 'MARKDOWN',
+            body: parsed.body,
+          });
+        } else {
+          post.parts.push({
+            type: 'MARKDOWN',
+            body: fileContents,
+          });
+        }
+ 
+      } else if (partFile.endsWith('.yml')) {
+        let partYml = yaml.load(fileContents);
+        post.parts.push(partYml);
       }
-    );
+    }
+
+    posts.push(post);
+
+    // const fileContents = fs.readFileSync(path.join(postsDirectory, mdFile), 'utf8');
+    // let parsed = fm(fileContents);
+    // posts.push(
+    //   {
+    //     tags: parsed.attributes.tags?.split(',') || [],
+    //     title: parsed.attributes.title,
+    //     category: parsed.attributes.category,
+    //     createdAt: parsed.attributes.createdAt,
+    //     description: parsed.attributes.description,
+    //     slug: parsed.attributes.slug,
+    //     body: parsed.body,
+    //     readingTimeMinutes: estimateReadingTime(parsed.body).text
+    //   }
+    // );
   }
 
   // sort by date (most recently created will be first in the list)
   posts.sort((a,b) => {
-    if (new Date(a.createdAt) < new Date(b.createdAt)) {
+    if (new Date(a.metadata.createdAt) < new Date(b.metadata.createdAt)) {
       return 1;
     }
 
-    if (new Date(a.createdAt) > new Date(b.createdAt)) {
+    if (new Date(a.metadata.createdAt) > new Date(b.metadata.createdAt)) {
       return -1;
     }
 
@@ -67,5 +117,5 @@ export const getPostsFromLocation = () => {
 
 export const getPostBySlug = (slug: String) => {
   const posts = getPostsFromLocation();
-  return posts.find(p => p.slug === slug)
+  return posts.find(p => p.metadata.slug === slug)
 }
