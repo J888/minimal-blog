@@ -48,7 +48,7 @@ const Post = ({ conf, post }: Props) => {
 
     <div className={styles.body}>
       {
-        post.parts.map((part, i) => {
+        post.parts.map((part: any, i: number) => {
 
           if (part.type === "MARKDOWN") {
             return (
