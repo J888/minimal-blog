@@ -22,7 +22,7 @@ const SiteWrapper = ({ children, conf, title }: Props) => {
           url('https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap');
           @import
           url('https://fonts.googleapis.com/css2?family=Corben&display=swap');
-          @import url('https://fonts.googleapis.com/css2?family=Ubuntu&family=Varela+Round&family=Noto+Serif&display=swap');
+          @import url('https://fonts.googleapis.com/css2?family=Ubuntu&family=Varela+Round&family=Noto+Serif&family=Martian+Mono&display=swap');
         </style>
       </Head>
       <div className={styles.main}>

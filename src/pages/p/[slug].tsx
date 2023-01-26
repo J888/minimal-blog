@@ -10,10 +10,12 @@ import { monokaiSublime } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 import SyntaxHighlighter from "react-syntax-highlighter/dist/cjs/default-highlight";
 import TagGroup from "@/components/tagging/TagGroup";
 import Image from "next/image";
+import { Configuration } from "@/types/conf";
+import { Post } from "@/types/post/post";
 
 type Props = {
-  conf: any;
-  post: any;
+  conf: Configuration;
+  post: Post;
 };
 
 const Post = ({ conf, post }: Props) => {
@@ -33,12 +35,12 @@ const Post = ({ conf, post }: Props) => {
       </div>
       <Spacer size="sm"/>
 
-      <span className={styles.readTime}>~{metadata.readingTimeMinutes}</span>
+      <span className={styles.readTime}>{metadata.readTime}</span>
       
       <Spacer size="xxs"/>
 
       <div>
-        <AiTwotoneCalendar style={{fontSize: '1.2rem'}}/> <span className={styles.date}>{new Date(metadata.createdAt).toDateString()}</span>
+        <AiTwotoneCalendar style={{fontSize: '1.2rem'}}/> <span className={styles.date}>{new Date(metadata.createdAt as string).toDateString()}</span>
       </div>
       
     
@@ -67,7 +69,7 @@ const Post = ({ conf, post }: Props) => {
                         {...props}
                       />
                     ) : (
-                      <code className={className ? className : ""} {...props}>
+                      <code className={className ? className : styles.genericCode} {...props}>
                         {children}
                       </code>
                     );
@@ -80,17 +82,20 @@ const Post = ({ conf, post }: Props) => {
           } else if (part.type === 'IMAGE') {
             return (
               <Image
-                alt={'testalt'}
+                alt={`image for ${post.metadata.title}`}
                 src={part.url}
                 height={part.dimensions.height}
                 width={part.dimensions.width}
+                quality={part.quality || 75}
               />
+
             )
           };
         })
       }
     </div>
     <Spacer size="sm"/>
+    <span className={styles.inCategory}>In category: {post.metadata.category}</span>
 
   </SiteWrapper>;
 };

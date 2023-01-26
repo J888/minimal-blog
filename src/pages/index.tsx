@@ -3,11 +3,18 @@ import styles from "@/styles/Home.module.scss";
 import PostListItem from "@/components/PostListItem";
 import Spacer from "@/components/utility/Spacer";
 import SectionHeading from "@/components/SectionHeading";
-import { getConf, getPostsFromLocation } from "@/util/dataUtil";
+import { getConf, getFrontPagePosts } from "@/util/dataUtil";
 import Link from "next/link";
 import SiteWrapper from "@/components/wrappers/SiteWrapper";
+import { Configuration } from "@/types/conf";
+import { Post } from "@/types/post/post";
 
-const Home = ({ conf, posts }: any) => {
+interface Props {
+  conf: Configuration;
+  posts: Post[];
+}
+
+const Home = ({ conf, posts }: Props) => {
   return (
     <SiteWrapper conf={conf} title={'Home' + ' | ' + conf.site.name}>
       <Spacer size="xxs" />
@@ -46,7 +53,7 @@ export async function getStaticProps(context: any) {
     return {
       props: {
         conf: getConf(),
-        posts: getPostsFromLocation(),
+        posts: getFrontPagePosts(),
       },
     };
   } catch (ex) {

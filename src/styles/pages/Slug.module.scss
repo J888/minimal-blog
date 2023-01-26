@@ -44,12 +44,25 @@
   font-size: 0.7rem;
 }
 
+.genericCode {
+  font-family: "Martian Mono", monospace;
+  background-color: rgb(29, 82, 116);
+  padding: 0.1rem 0.2rem 0.1rem 0.3rem;
+  color: rgb(247, 237, 214);
+  font-size: 0.88rem;
+}
+
 .body {
   font-family: "Varela Round", sans-serif;
   color: rgb(76, 76, 76);
   line-height: 2.2rem;
   margin: 0 0rem 0 1.5rem;
   font-size: 1.2rem;
+
+  & blockquote {
+    background-color: rgb(189, 189, 189);
+    padding: 0.1rem 0.6rem 0.1rem 1.3rem;
+  }
 
   a:link {
     color: #265301;
@@ -73,4 +86,9 @@
     background: #265301;
     color: #cdfeaa;
   }
+}
+
+.inCategory {
+  color:rgb(136, 136, 136);
+  font-size: 0.8rem;
 }

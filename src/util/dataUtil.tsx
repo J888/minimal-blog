@@ -1,3 +1,6 @@
+import { Configuration } from "@/types/conf";
+import { Post } from "@/types/post/post";
+
 const fs = require('fs');
 const path = require('path');
 const fm = require('front-matter');
@@ -7,7 +10,7 @@ const BUILD_TIME_POSTS_DIR = `tmp/posts`;
 const BUILD_TIME_CONF_PATH = `tmp/conf.yml`;
 const LOCAL_PATH_MISSING_ERROR = `\n\n\n\n>>>>>>>> LOCAL_PATH env var required <<<<<<<<\n\n\n\n`;
 
-export const getConf = () => {
+export const getConf = (): Configuration | {} => {
   if (process.env.DEV_MODE && !process.env.LOCAL_PATH) {
     throw new Error(LOCAL_PATH_MISSING_ERROR);
   }
@@ -22,7 +25,11 @@ export const getConf = () => {
   }
 }
 
-export const getPostsFromLocation = () => {
+export const getFrontPagePosts = (): Post[] => {
+  return getPostsFromLocation().filter(p => !p.metadata.hideFromFrontPage);
+}
+
+export const getPostsFromLocation = (): Post[] => {
   if (process.env.DEV_MODE && !process.env.LOCAL_PATH) {
     throw new Error(LOCAL_PATH_MISSING_ERROR);
   }
@@ -36,7 +43,7 @@ export const getPostsFromLocation = () => {
     let postDir = postDirectories[i];
 
     let partsFiles = fs.readdirSync(path.join(postsDirectory, postDir), 'utf8');
-    let post: any = {
+    let post: Post = {
       metadata: {},
       parts: []
     };
@@ -47,21 +54,30 @@ export const getPostsFromLocation = () => {
   
       let fileContents = fs.readFileSync(path.join(postsDirectory, postDir, partFile), 'utf8');
 
-
       // md file
       if (partFile.endsWith('.md')) {
-        
+
         // the first part file will always contain the front matter
         if (partFile === 'p1.md') {
+
           let parsed = fm(fileContents);
+          let readTime;
+          let estimatedReadMins = estimateReadingTime(parsed.body).minutes;
+          if (estimatedReadMins < 1) {
+            readTime = '< 1 min read'
+          } else {
+            readTime = estimateReadingTime(parsed.body).text
+          }
+          
           post.metadata = {
+            hideFromFrontPage: parsed.attributes.hideFromFrontPage || false,
             tags: parsed.attributes.tags?.split(',') || [],
             title: parsed.attributes.title,
             category: parsed.attributes.category,
             createdAt: parsed.attributes.createdAt,
             description: parsed.attributes.description,
             slug: parsed.attributes.slug,
-            readingTimeMinutes: estimateReadingTime(parsed.body).text
+            readTime,
           };
 
           post.parts.push({
@@ -82,30 +98,18 @@ export const getPostsFromLocation = () => {
     }
 
     posts.push(post);
-
-    // const fileContents = fs.readFileSync(path.join(postsDirectory, mdFile), 'utf8');
-    // let parsed = fm(fileContents);
-    // posts.push(
-    //   {
-    //     tags: parsed.attributes.tags?.split(',') || [],
-    //     title: parsed.attributes.title,
-    //     category: parsed.attributes.category,
-    //     createdAt: parsed.attributes.createdAt,
-    //     description: parsed.attributes.description,
-    //     slug: parsed.attributes.slug,
-    //     body: parsed.body,
-    //     readingTimeMinutes: estimateReadingTime(parsed.body).text
-    //   }
-    // );
   }
 
   // sort by date (most recently created will be first in the list)
   posts.sort((a,b) => {
-    if (new Date(a.metadata.createdAt) < new Date(b.metadata.createdAt)) {
+    let aCreatedAt = a.metadata.createdAt as string;
+    let bCreatedAt = b.metadata.createdAt as string;
+
+    if (new Date(aCreatedAt) < new Date(bCreatedAt)) {
       return 1;
     }
 
-    if (new Date(a.metadata.createdAt) > new Date(b.metadata.createdAt)) {
+    if (new Date(aCreatedAt) > new Date(bCreatedAt)) {
       return -1;
     }
 
@@ -115,7 +119,7 @@ export const getPostsFromLocation = () => {
   return posts;
 }
 
-export const getPostBySlug = (slug: String) => {
+export const getPostBySlug = (slug: String): Post | undefined => {
   const posts = getPostsFromLocation();
   return posts.find(p => p.metadata.slug === slug)
 }
