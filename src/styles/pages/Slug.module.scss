@@ -1,8 +1,15 @@
 $body_mobileFontSize: 0.8rem;
 $body_desktopFontSize: 1rem;
 
+$body_mobileLeftMargin: 0.2rem;
+$body_desktopLeftMargin: 1.5rem;
+
 $title_mobileFontSize: 1.9rem;
 $title_desktopFontSize: 2.3rem;
+
+$body_mobileLineHeight: 1.3rem;
+$body_desktopLineHeight: 1.8rem;
+
 
 .category {
   background-color: #c1c1c1;
@@ -60,8 +67,8 @@ $title_desktopFontSize: 2.3rem;
 .body {
   font-family: "Varela Round", sans-serif;
   color: rgb(76, 76, 76);
-  line-height: 2.2rem;
-  margin: 0 0rem 0 1.5rem;
+  line-height: $body_mobileLineHeight;
+  margin: 0 0rem 0 $body_mobileLeftMargin;
   font-size: $body_mobileFontSize;
 
   & blockquote {
@@ -102,7 +109,8 @@ $title_desktopFontSize: 2.3rem;
 @media (min-width: 700px) {
   .body {
     font-size: $body_desktopFontSize;
-
+    line-height: $body_desktopLineHeight;
+    margin: 0 0rem 0 $body_desktopLeftMargin;
   }
 
   .title {
