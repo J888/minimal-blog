@@ -2,21 +2,25 @@ $backgroundColor: rgb(245, 242, 239);
 $adjustedBackgroundColor: adjust-color($color: $backgroundColor, $red: 10, $green: 10, $blue: 10, $alpha: 1.0);
 $highlightColor: rgb(250, 249, 222);
 $bottomMargin: 0.4rem;
+
+$title_mobileFontSize: 1.1rem;
+$title_desktopFontSize: 1.55rem;
+
 .main {
   background-color: $backgroundColor;
   
   // border: solid rgb(189, 189, 189) 0.1rem;
   border-radius: 0.2rem;
-  border-left: solid $backgroundColor 0.2rem;
-  border-bottom: solid $highlightColor 0.2rem;
+  // border-left: solid $backgroundColor 0.2rem;
+  // border-bottom: solid $highlightColor 0.2rem;
   font-size: 0.77rem;
 
-  transition: border-left-color 0.8s ease;
+  transition: border-left-color 0.8s ease, background-color 0.4s ease;
 
   &:hover {
     background-color: $adjustedBackgroundColor;
-    border-left: solid $highlightColor 0.2rem;
-    border-bottom: none;
+    // border-left: solid $highlightColor 0.2rem;
+    // border-bottom: #e8e8e8;
 
     cursor: pointer;
   }
@@ -27,7 +31,7 @@ $bottomMargin: 0.4rem;
 
 .title {
   font-family: 'Noto Serif', serif;
-  font-size: 1.7rem;
+  font-size: $title_mobileFontSize;
   color:rgb(73, 73, 73);
 }
 
@@ -39,5 +43,9 @@ $bottomMargin: 0.4rem;
   .main {
     min-width: 26rem;
 
+  }
+
+  .title {
+    font-size: $title_desktopFontSize;
   }
 }

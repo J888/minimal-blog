@@ -1,3 +1,9 @@
+$body_mobileFontSize: 0.8rem;
+$body_desktopFontSize: 1rem;
+
+$title_mobileFontSize: 1.9rem;
+$title_desktopFontSize: 2.3rem;
+
 .category {
   background-color: #c1c1c1;
   font-size: 0.9rem;
@@ -23,7 +29,7 @@
 .title {
   background-color: #303030;
   color: rgb(238, 238, 238);
-  font-size: 2.3rem;
+  font-size: $title_mobileFontSize;
   padding: 0.7rem;
   width: fit-content;
   margin: 0 0 0.8rem 0;
@@ -49,7 +55,6 @@
   background-color: rgb(29, 82, 116);
   padding: 0.1rem 0.2rem 0.1rem 0.3rem;
   color: rgb(247, 237, 214);
-  font-size: 0.88rem;
 }
 
 .body {
@@ -57,7 +62,7 @@
   color: rgb(76, 76, 76);
   line-height: 2.2rem;
   margin: 0 0rem 0 1.5rem;
-  font-size: 1.2rem;
+  font-size: $body_mobileFontSize;
 
   & blockquote {
     background-color: rgb(189, 189, 189);
@@ -91,4 +96,16 @@
 .inCategory {
   color:rgb(136, 136, 136);
   font-size: 0.8rem;
+}
+
+// for desktop devices
+@media (min-width: 700px) {
+  .body {
+    font-size: $body_desktopFontSize;
+
+  }
+
+  .title {
+    font-size: $title_desktopFontSize;
+  }
 }

@@ -81,14 +81,23 @@ const Post = ({ conf, post }: Props) => {
             );
           } else if (part.type === 'IMAGE') {
             return (
-              <Image
-                alt={`image for ${post.metadata.title}`}
-                src={part.url}
-                height={part.dimensions.height}
-                width={part.dimensions.width}
-                quality={part.quality || 75}
-              />
-
+      
+              <div style={{position: 'relative', height: `${part.dimensions.height}px`}}>
+                <Image
+                  alt={`image for ${post.metadata.title}`}
+                  src={part.url}
+                  style={{objectFit: 'contain'}}
+                  fill
+                  
+                  // height and width are not used if fill and objectFit are used (above)
+                  // but I still use height for the parent container because it's useful
+                  //     (not setting height on the parent makes the whole thing go away)
+                  // height={part.dimensions.height}
+                  // width={part.dimensions.width}
+                  quality={part.quality || 65}
+                />
+              </div>
+         
             )
           };
         })

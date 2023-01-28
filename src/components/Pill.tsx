@@ -6,9 +6,9 @@ interface PillProps {
 
 const Pill = ({ children }: PillProps) => {
   return (
-    <div className={styles.main}>
+    <span className={styles.main}>
       {children}
-    </div>
+    </span>
   );
 }
 

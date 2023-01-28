@@ -1,0 +1,61 @@
+$backgroundColor: #e5e5e1;
+
+$adjustedBackgroundColor: adjust-color($color: $backgroundColor, $red: 60, $green: 20, $blue: 20, $alpha: 1.0);
+$highlightColor: rgb(238, 238, 227);
+$bottomMargin: 1rem;
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: $backgroundColor;
+  border-radius: 0.2rem;
+
+  // border-top: solid rgb(220, 214, 192) 0.1rem;
+  
+  font-size: 0.77rem;
+
+  transition: border-left-color 0.8s ease, background-color 0.4s ease;
+
+  &:hover {
+    background-color: $adjustedBackgroundColor;
+    // border-left: solid $highlightColor 0.2rem;
+    // border-bottom: none;
+
+    cursor: pointer;
+  }
+  padding: 0.1rem 0.2rem 0.3rem 0.3rem;
+  // min-height: 8rem;
+  margin: 0 0.4rem $bottomMargin 0;
+}
+
+.desc {
+  font-size: 0.7rem;
+  color:rgb(139, 118, 55);
+  margin: 0.6rem 0 0 0;
+}
+
+.title {
+  font-family: 'Noto Serif', serif;
+  font-size: 1rem;
+  color:rgb(104, 103, 103);
+  margin:0;
+}
+
+.date {
+  color:rgb(172, 143, 48);
+  margin: 0.8rem 0 0 0;
+  font-size: 0.65rem;
+}
+
+.meta {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+@media (min-width: 700px) {
+  .main {
+    min-width: 26rem;
+
+  }
+}
