@@ -82,7 +82,7 @@ const Post = ({ conf, post }: Props) => {
           } else if (part.type === 'IMAGE') {
             return (
       
-              <div style={{position: 'relative', height: `${part.dimensions.height}px`}}>
+              <div style={{position: 'relative', height: `60vw`, maxHeight: `40rem`}}>
                 <Image
                   alt={`image for ${post.metadata.title}`}
                   src={part.url}
