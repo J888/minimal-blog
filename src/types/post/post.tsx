@@ -9,6 +9,7 @@ export interface PostMetadata {
   description?: string;
   slug?: string;
   readTime?: string;
+  mainImg?: string;
 }
 
 export interface Post {

@@ -1,20 +1,11 @@
-import Spacer from "@/components/utility/Spacer";
 import SiteWrapper from "@/components/wrappers/SiteWrapper";
-import { getConf, getPostBySlug, getPostsFromLocation } from "@/util/dataUtil";
+import { getConf, getPostsFromLocation } from "@/util/dataUtil";
 import styles from '@/styles/All.module.scss';
 import React from "react";
-import ReactMarkdown from "react-markdown";
-import { AiTwotoneCalendar } from "react-icons/ai";
-
-import { monokaiSublime } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
-import SyntaxHighlighter from "react-syntax-highlighter/dist/cjs/default-highlight";
-import TagGroup from "@/components/tagging/TagGroup";
-import Image from "next/image";
 import { Configuration } from "@/types/conf";
 import { Post } from "@/types/post/post";
 import ListItemCompact from "@/components/list/ListItemCompact";
 import Link from "next/link";
-import style from "react-syntax-highlighter/dist/esm/styles/hljs/a11y-dark";
 
 type Props = {
   conf: Configuration;

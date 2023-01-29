@@ -1,4 +1,4 @@
-$paddingDefault: 0.3rem;
+$paddingDefault: 0.8rem;
 
 $mobileFontSize: 0.7rem;
 $desktopFontSize: 1.2rem;
@@ -6,13 +6,13 @@ $desktopFontSize: 1.2rem;
 .main {
   padding: $paddingDefault;
   font-size: $mobileFontSize;
-  border: solid black 0.1rem;
-  background-color: #000000;
+  // border: solid black 0.1rem;
+  // background-color: #000000;
   border-bottom: solid rgb(251, 219, 175) 0.2rem;
   /* border-radius: 0.5rem; */
   width: -moz-fit-content;
   // width: fit-content;
-  color: #bebebe;
+  color: #ddcbb2;
   transition: background-color 0.3s ease, font-size 0.8s ease, padding-left 0.2s ease-in-out;
   &:hover {
     background-color: rgb(47, 63, 89);

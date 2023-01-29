@@ -1,12 +1,51 @@
+$backgroundColor: rgb(69, 69, 69);
+
 .main {
+  display: flex;
+  justify-content: space-between;
+  background-color: $backgroundColor;
   flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 100%;
+  border-bottom: solid #424141 0.1rem;
+}
+
+.siteLogo {
+  width: 19rem;
+  width: 100%;
+  display: none;
+}
+
+.siteLogoSmall {
+  height: 3rem;
+  margin: 0.4rem 0 0 0.4rem;
+}
+
+.siteLinksContainer {
+
 }
 
 @media (min-width: 700px) {
   .main {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
-    background-color: rgb(0, 0, 0);
+  }
+
+  .siteLogo {
+    width: 18rem;
+    display: inline-block;
+    margin: 0.4rem 0 0 0.4rem;
+  }
+
+  .siteLogoSmall {
+    display: none;
+  }
+
+  .siteLinksContainer {
+    padding: 0.6rem 0 0 0;
+    display: flex;
   }
 }

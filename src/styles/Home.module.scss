@@ -15,11 +15,15 @@
 
 .siteDesc {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  background-color: black;
+  width: 100%;
+  color: white;
   justify-content: space-between;
   & p {
     padding: 0;
   }
+  
 }
 
 // mobile first design - these apply when screen is bigger than 700px!
@@ -32,9 +36,9 @@
     width: 100%;
     
 
-    & div {
-      margin-right: 1rem;
-    }
+    // & div {
+    //   margin-right: 1rem;
+    // }
   }
 
   .siteDesc {

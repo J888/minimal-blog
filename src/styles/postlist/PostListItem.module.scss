@@ -6,6 +6,9 @@ $bottomMargin: 0.4rem;
 $title_mobileFontSize: 1.1rem;
 $title_desktopFontSize: 1.55rem;
 
+$main_mobileMaxWidth: none;
+$main_desktopMaxWidth: 25.4rem;
+
 .main {
   background-color: $backgroundColor;
   
@@ -19,14 +22,17 @@ $title_desktopFontSize: 1.55rem;
 
   &:hover {
     background-color: $adjustedBackgroundColor;
+    opacity: 0.9;
     // border-left: solid $highlightColor 0.2rem;
     // border-bottom: #e8e8e8;
 
     cursor: pointer;
   }
-  padding: 0.1rem 0.8rem 0.3rem 0.9rem;
+  // padding: 0.8rem 0.8rem 0.3rem 0.9rem;
   min-height: 8rem;
-  margin: 0 0.4rem $bottomMargin 0;
+  margin: 0 1rem $bottomMargin 0;
+  max-width: $main_mobileMaxWidth;
+  overflow: hidden; // so the image is clipped (has round corners, etc)
 }
 
 .title {
@@ -39,10 +45,22 @@ $title_desktopFontSize: 1.55rem;
   color:rgb(123, 123, 123);
 }
 
+.topImg {
+  position: relative;
+  overflow: hidden;
+  height: 8rem;
+  margin: 0 0 0 0;
+  
+}
+
+.metaContainer {
+  padding: 0 1rem 1rem 1rem;
+}
+
 @media (min-width: 700px) {
   .main {
     min-width: 26rem;
-
+    max-width: $main_desktopMaxWidth;
   }
 
   .title {

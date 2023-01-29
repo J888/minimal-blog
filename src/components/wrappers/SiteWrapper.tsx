@@ -19,15 +19,16 @@ const SiteWrapper = ({ children, conf, title }: Props) => {
         <link rel="icon" href="/favicon.ico" />
         <style>
           @import
-          url('https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap');
-          @import
-          url('https://fonts.googleapis.com/css2?family=Corben&display=swap');
-          @import url('https://fonts.googleapis.com/css2?family=Ubuntu&family=Varela+Round&family=Noto+Serif&family=Martian+Mono&display=swap');
+          url("https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap");
+
+          @import url("https://fonts.googleapis.com/css2?family=Ubuntu&family=Varela+Round&family=Noto+Serif&family=Martian+Mono&display=swap');
         </style>
       </Head>
       <div className={styles.main}>
         <NavBar conf={conf}/>
-        {children}
+          <div className={styles.siteContent}>
+            {children}
+          </div>
         <Footer conf={conf}/>
       </div>
     </>

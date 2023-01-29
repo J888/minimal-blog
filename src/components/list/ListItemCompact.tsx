@@ -1,7 +1,5 @@
 import styles from '@/styles/list/ListItemCompact.module.scss';
 import { Post } from '@/types/post/post';
-import Pill from '../Pill';
-import Spacer from '../utility/Spacer';
 
 type Props = {
   post: Post;

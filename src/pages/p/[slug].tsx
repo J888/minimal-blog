@@ -55,6 +55,7 @@ const Post = ({ conf, post }: Props) => {
           if (part.type === "MARKDOWN") {
             return (
               <ReactMarkdown
+                key={`md-part-${i}`}
                 components={{
                   code({ node, inline, className, children, ...props }) {
                     const match = /language-(\w+)/.exec(className || "");
@@ -82,7 +83,8 @@ const Post = ({ conf, post }: Props) => {
           } else if (part.type === 'IMAGE') {
             return (
       
-              <div style={{position: 'relative', height: `60vw`, maxHeight: `40rem`}}>
+              <div style={{position: 'relative', height: `60vw`, maxHeight: `40rem`}}
+                   key={`img-part-${i}`}>
                 <Image
                   alt={`image for ${post.metadata.title}`}
                   src={part.url}
@@ -124,7 +126,6 @@ export async function getStaticProps({ params, preview = false, previewData }: a
 
 export async function getStaticPaths() {
   const posts = getPostsFromLocation();
-  console.log(posts)
 
   return {
     paths: posts.map(p => ({ params: { slug: p.metadata.slug } })),

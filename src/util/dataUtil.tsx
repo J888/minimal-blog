@@ -38,7 +38,7 @@ export const getPostsFromLocation = (): Post[] => {
 
   let posts = [];
   const postDirectories = fs.readdirSync(postsDirectory);
-  console.log(postDirectories);
+
   for (let i = 0; i < postDirectories.length; i++) {
     let postDir = postDirectories[i];
 
@@ -78,6 +78,7 @@ export const getPostsFromLocation = (): Post[] => {
             description: parsed.attributes.description,
             slug: parsed.attributes.slug,
             readTime,
+            ...post.metadata
           };
 
           post.parts.push({
@@ -94,7 +95,17 @@ export const getPostsFromLocation = (): Post[] => {
       } else if (partFile.endsWith('.yml')) {
         let partYml = yaml.load(fileContents);
         post.parts.push(partYml);
+
+        if (partYml.type === `IMAGE` && !post.metadata.mainImg) {
+          post.metadata.mainImg = partYml.url;
+        }
       }
+    }
+
+    // if there is no image in this article, we need to add the default
+    // TODO: make this override-able from the post metadata itself... or just add an image to every post as a rule
+    if (!post.metadata.mainImg) {
+      post.metadata.mainImg = (getConf() as Configuration).defaults.post.displayImage.url;
     }
 
     posts.push(post);

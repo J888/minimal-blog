@@ -22,9 +22,7 @@ const SiteMap = () => {
 }
 
 export const getServerSideProps = async ({ req, res }: any) => {
-  console.log(req.headers.host)
   const posts: Post[] = getPostsFromLocation();
-
 
   const baseUrl = req.headers.host;
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>

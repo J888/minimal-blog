@@ -10,32 +10,14 @@ module.exports = async (phase) => {
 
   }
 
-  /**
-   * The domains that are allowed when using next/image
-   */
-  // const images = {
-  //   domains: [
-  //     `${process.env.PUBLIC_FILES_BUCKET}.s3.${process.env.S3_REGION}.amazonaws.com`,
-  //     'images.squarespace-cdn.com'
-  //   ],
-  // }
-
   return {
     reactStrictMode: true,
     env,
     images: {
       remotePatterns: [
         {
-          protocol: 'https',
-          hostname: 'sdt-pub1.s3.us-east-2.amazonaws.com',
-          port: '',
-          pathname: '/imgs/*.(jpg|jpeg)',
-        },
-        {
-          protocol: 'https',
-          hostname: 'sdt-pub1.s3.amazonaws.com',
-          port: '',
-          pathname: '/imgs/*.(jpg|jpeg)',
+          protocol: "https",
+          hostname: "**",
         },
       ],
     },

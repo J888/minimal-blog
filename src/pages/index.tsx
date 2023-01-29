@@ -20,12 +20,12 @@ const Home = ({ conf, posts }: Props) => {
       <Spacer size="xxs" />
 
       <main className={styles.main}>
-        <div className={styles.siteDesc}>
+        {/* <div className={styles.siteDesc}>
           {
             conf.frontPage.paragraphs.map((p: String, i: number) => <p key={`para-${i}`}>{p}</p>)
           }
 
-        </div>
+        </div> */}
 
         <Spacer size="sm" />
 
@@ -60,7 +60,6 @@ export async function getStaticProps(context: any) {
     console.log(ex);
     return { notFound: true };
   }
-
 }
 
 export default Home;

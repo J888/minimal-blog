@@ -1,3 +1,19 @@
+$siteContent_desktop_marginLeft: 0.9rem;
+$siteContent_mobile_marginLeft: 0.2rem;
+
+$siteContent_desktop_marginRight: 0.8rem;
+$siteContent_mobile_marginRight: 0.2rem;
+
 .main {
   
+}
+
+.siteContent {
+  margin: 12rem $siteContent_mobile_marginRight 0 $siteContent_mobile_marginLeft;
+}
+
+@media (min-width: 700px) {
+  .siteContent {
+    margin: 5rem $siteContent_desktop_marginRight 0 $siteContent_desktop_marginLeft;
+  }
 }
