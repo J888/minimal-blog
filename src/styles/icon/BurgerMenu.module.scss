@@ -1,0 +1,34 @@
+.main {
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.bar {
+  width: 35px;
+  height: 5px;
+  background-color: #ffda8f;;
+  margin: 6px 0;
+
+  // transition: <property> <duration> <timing-function> <delay>;
+  transition: transform 0.4s;
+
+}
+
+.bar--transform-r {
+  @extend .bar;
+
+  transform: rotate(37deg) translateY(8px);
+}
+
+.bar--transform-l {
+  @extend .bar;
+
+  transform: rotate(-39deg) translateY(-6px);
+}
+
+.bar-hidden {
+  @extend .bar;
+
+  display: none;
+}
