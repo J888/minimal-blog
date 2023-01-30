@@ -4,6 +4,7 @@ const {
 } = require('next/constants');
 const yaml = require('js-yaml');
 const fs = require('fs');
+const BUILD_TIME_CONF_PATH = `tmp/conf.yml`;
 
 const getConf = (isDevMode) => {
   if (isDevMode&& !process.env.LOCAL_PATH) {
