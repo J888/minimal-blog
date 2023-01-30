@@ -8,6 +8,7 @@ import Link from "next/link";
 import SiteWrapper from "@/components/wrappers/SiteWrapper";
 import { Configuration } from "@/types/conf";
 import { Post } from "@/types/post/post";
+import { gaEvent } from "@/util/gaUtil";
 
 interface Props {
   conf: Configuration;
@@ -34,7 +35,10 @@ const Home = ({ conf, posts }: Props) => {
           <Spacer size="xxs" />
           <div className={styles.postList}>
             {posts.map((post: any, i: number) => (
-              <Link href={"/p/" + post.metadata.slug} key={`linktopost-${i}`}>
+              <Link href={"/p/" + post.metadata.slug} key={`linktopost-${i}`}
+                    onClick={() => {
+                      gaEvent(`post_list_item_click`, {slug: post.metadata.slug});
+                    }}>
                 <PostListItem
                   post={post}
                 />

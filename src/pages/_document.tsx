@@ -5,7 +5,7 @@ export default function Document() {
     <Html lang="en">
       <Head>
         {
-          process.env.GA_ENABLED && <>
+          process.env.GA_ENABLED && !process.env.DEV_MODE && <>
             {/* Global Site Tag (gtag.js) - Google Analytics */}
             <script
               async
