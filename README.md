@@ -38,3 +38,7 @@ $ yarn run build
 
 $ yarn run start
 ```
+
+### Todo
+- make the theme configurable
+- make a control panel for the config

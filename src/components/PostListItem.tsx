@@ -25,7 +25,7 @@ const PostListItem = ({ post }: PostListItemProps) => {
         <h2 className={styles.title}>{metadata.title}</h2>
         <p className={styles.category}>Category: {metadata.category}</p>
         <p className={styles.date}>{new Date(metadata.createdAt as string).toLocaleDateString()}</p>
-        <p>{metadata.description}</p>
+        <p className={styles.description}>{metadata.description}</p>
       </div>
 
     </div>

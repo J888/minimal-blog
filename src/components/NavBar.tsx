@@ -18,11 +18,11 @@ const NavBar = ({ conf }: NavBarProps) => {
 
 
       <Link href={'/'} className={styles.siteLogo}>
-        <img src="https://sdt-pub1.s3.amazonaws.com/imgs/sitelogo.png" style={{width: `100%`}}/>
+        <img src={conf.nav.logo.desktop} style={{width: `100%`}}/>
       </Link>
 
       <Link href={'/'}>
-        <img src="https://sdt-pub1.s3.amazonaws.com/imgs/sitelogosmall.png" className={styles.siteLogoSmall}/>
+        <img src={conf.nav.logo.mobile} className={styles.siteLogoSmall}/>
       </Link>
 
       <div className={styles.burger} onClick={() => {setMenuExpanded(!menuExpanded)}}>

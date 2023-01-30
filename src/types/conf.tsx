@@ -10,6 +10,10 @@ export interface Configuration {
     paragraphs: string[];
   };
   nav: {
+    logo: {
+      desktop: string;
+      mobile: string;
+    }
     links: NavLink[];
   };
   site: {

@@ -44,7 +44,7 @@ $body_desktopLineHeight: 1.8rem;
 
 .readTime {
   width: fit-content;
-  color: rgb(59 59 59);
+  color: rgb(118, 117, 117);
   margin: 0 0.3rem 0 0;
   padding: 0 0.5rem 0.05rem 0.4rem;
   font-size: 0.77rem;
@@ -66,13 +66,14 @@ $body_desktopLineHeight: 1.8rem;
 
 .body {
   font-family: "Varela Round", sans-serif;
-  color: rgb(76, 76, 76);
+  color: rgb(205, 205, 205);
   line-height: $body_mobileLineHeight;
   margin: 0 0rem 0 $body_mobileLeftMargin;
   font-size: $body_mobileFontSize;
 
   & blockquote {
-    background-color: rgb(189, 189, 189);
+    background-color: rgb(198, 189, 177);
+    color: rgb(82, 81, 81);
     padding: 0.1rem 0.6rem 0.1rem 1.3rem;
   }
 
