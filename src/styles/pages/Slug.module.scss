@@ -1,8 +1,11 @@
 $body_mobileFontSize: 0.8rem;
 $body_desktopFontSize: 1rem;
 
-$body_mobileLeftMargin: 0.2rem;
-$body_desktopLeftMargin: 1.5rem;
+$body_mobileLeftMargin: 5vw;
+$body_desktopLeftMargin: 8vw;
+
+$body_mobileRightMargin: 5vw;
+$body_desktopRightMargin: 8vw;
 
 $title_mobileFontSize: 1.9rem;
 $title_desktopFontSize: 2.3rem;
@@ -31,6 +34,7 @@ $body_desktopLineHeight: 1.8rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin: 0 4vw 0 4vw;
 }
 
 .title {
@@ -68,7 +72,7 @@ $body_desktopLineHeight: 1.8rem;
   font-family: "Varela Round", sans-serif;
   color: rgb(205, 205, 205);
   line-height: $body_mobileLineHeight;
-  margin: 0 0rem 0 $body_mobileLeftMargin;
+  margin: 0 $body_mobileRightMargin 0 $body_mobileLeftMargin;
   font-size: $body_mobileFontSize;
 
   & blockquote {
@@ -111,7 +115,7 @@ $body_desktopLineHeight: 1.8rem;
   .body {
     font-size: $body_desktopFontSize;
     line-height: $body_desktopLineHeight;
-    margin: 0 0rem 0 $body_desktopLeftMargin;
+    margin: 0 $body_desktopRightMargin 0 $body_desktopLeftMargin;
   }
 
   .title {
