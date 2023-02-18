@@ -20,17 +20,17 @@ type Props = {
 
 const Post = ({ conf, post }: Props) => {
   let metadata = post.metadata;
-  return <SiteWrapper conf={conf} title={metadata.title + ' | ' + conf.site.name}>
+  return <SiteWrapper conf={conf} title={metadata.title + ' | ' + conf.site.name} post={post}>
     <Spacer size="sm"/>
 
     <div className={styles.titleDescContainer}>
 
-      <h2 className={styles.title}>{metadata.title}</h2>
+      <h1 className={styles.title}>{metadata.title}</h1>
       <span className={styles.description}>{metadata.description}</span>
       <Spacer size="xxs"/>
       
       <div style={{width: '30rem'}}>
-        <TagGroup tags={metadata.tags}/>
+        <TagGroup tags={metadata.tags?.map(t => t.replace(/ /g, '') ) }/>
 
       </div>
       <Spacer size="sm"/>

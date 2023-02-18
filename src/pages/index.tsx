@@ -17,7 +17,7 @@ interface Props {
 
 const Home = ({ conf, posts }: Props) => {
   return (
-    <SiteWrapper conf={conf} title={'Home' + ' | ' + conf.site.name}>
+    <SiteWrapper conf={conf} title={'Home' + ' | ' + conf.site.name} description={`The homepage of ${conf.site.name}`}>
       <Spacer size="xxs" />
 
       <main className={styles.main}>

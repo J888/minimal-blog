@@ -14,7 +14,7 @@ type Props = {
 
 const All = ({ conf, posts }: Props) => {
 
-  return <SiteWrapper conf={conf} title={'All' + ' | ' + conf.site.name}>
+  return <SiteWrapper conf={conf} title={'All' + ' | ' + conf.site.name} description={`All posts from ${conf.site.name}`}>
     <h2 className={styles.pageHeading}>ALL POSTS</h2>
     <p className={styles.postCount}>{posts.length} total</p>
     <div className={styles.compactPostList}>
