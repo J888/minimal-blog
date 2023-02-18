@@ -1,4 +1,4 @@
-$body_mobileFontSize: 0.8rem;
+$body_mobileFontSize: 0.9rem;
 $body_desktopFontSize: 1rem;
 
 $body_mobileLeftMargin: 5vw;
@@ -69,7 +69,7 @@ $body_desktopLineHeight: 1.8rem;
 }
 
 .body {
-  font-family: "Varela Round", sans-serif;
+  font-family: "Merriweather", serif;
   color: rgb(205, 205, 205);
   line-height: $body_mobileLineHeight;
   margin: 0 $body_mobileRightMargin 0 $body_mobileLeftMargin;

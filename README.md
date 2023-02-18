@@ -13,7 +13,7 @@ posts/
 Example:
 
 ```shell
-$ LOCAL_PATH=/Users/me/Documents/staticsitefiles/mysite yarn run dev
+$ LOCAL_PATH=/Users/me/Documents/staticsitefiles/mysite yarn dev
 ```
 
 ### Build For Deployment
