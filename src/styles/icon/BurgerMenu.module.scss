@@ -5,7 +5,7 @@
 }
 
 .bar {
-  width: 35px;
+  width: 29px;
   height: 5px;
   background-color: #ffda8f;;
   margin: 6px 0;
@@ -18,13 +18,13 @@
 .bar--transform-r {
   @extend .bar;
 
-  transform: rotate(37deg) translateY(8px);
+  transform: rotate(45deg) translateY(8px);
 }
 
 .bar--transform-l {
   @extend .bar;
 
-  transform: rotate(-39deg) translateY(-6px);
+  transform: rotate(313deg) translateY(-7.3px);
 }
 
 .bar-hidden {

@@ -15,19 +15,15 @@ const NavBar = ({ conf }: NavBarProps) => {
   const [menuExpanded, setMenuExpanded] = useState(false);
 
   return (
+   
     <div className={styles.main}>
 
       <Link href={'/'} className={styles.siteLogo} onClick={() => {
-        gaEvent(`nav_logo_click_desktop`, {});
+        gaEvent(`nav_logo_click`, {});
       }}>
-        <img src={conf.nav.logo.desktop} style={{width: `100%`}}/>
+        Software Dev Tips
       </Link>
 
-      <Link href={'/'} onClick={() => {
-        gaEvent(`nav_logo_click_mobile`, {});
-      }}>
-        <img src={conf.nav.logo.mobile} className={styles.siteLogoSmall}/>
-      </Link>
 
       <div className={styles.burger}
            onClick={() => {
@@ -35,22 +31,24 @@ const NavBar = ({ conf }: NavBarProps) => {
               setMenuExpanded(!menuExpanded);
            }}>
         <BurgerMenu transformed={menuExpanded}/>
+        <div className={styles.dropdownMenu}>
+        {
+          menuExpanded && <div className={styles.siteLinksContainer}>
+          {conf.nav.links.map((link: NavLink, i: number) => (
+            <Link href={link.href} key={`navlink-${i}`} onClick={() => {
+              gaEvent(`nav_link_click`, {link, order: i + 1});
+            }}>
+              <NavBarItem>{link.text}</NavBarItem>
+            </Link>
+          ))}
+        </div>
+        }
       </div>
-    
-      {
-        menuExpanded && <div className={styles.siteLinksContainer}>
-        {conf.nav.links.map((link: NavLink, i: number) => (
-          <Link href={link.href} key={`navlink-${i}`} onClick={() => {
-            gaEvent(`nav_link_click`, {link, order: i + 1});
-          }}>
-            <NavBarItem>{link.text}</NavBarItem>
-          </Link>
-        ))}
       </div>
-      }
 
-
+  
     </div>
+
   );
 }
 
