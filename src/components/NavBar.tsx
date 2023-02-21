@@ -4,6 +4,7 @@ import { gaEvent } from '@/util/gaUtil';
 import Link from 'next/link';
 import { useState } from 'react';
 import BurgerMenu from './icon/BurgerMenu';
+import Logo from './logo/Logo';
 import NavBarItem from './NavBarItem';
 
 interface NavBarProps {
@@ -18,11 +19,7 @@ const NavBar = ({ conf }: NavBarProps) => {
    
     <div className={styles.main}>
 
-      <Link href={'/'} className={styles.siteLogo} onClick={() => {
-        gaEvent(`nav_logo_click`, {});
-      }}>
-        Software Dev Tips
-      </Link>
+      <Logo conf={conf}/>
 
 
       <div className={styles.burger}

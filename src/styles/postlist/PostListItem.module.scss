@@ -1,13 +1,15 @@
 $backgroundColor: rgb(245, 242, 239);
 $adjustedBackgroundColor: adjust-color($color: $backgroundColor, $red: 10, $green: 10, $blue: 10, $alpha: 1.0);
 $highlightColor: rgb(250, 249, 222);
-$bottomMargin: 0.4rem;
+$bottomMargin: 0.9rem;
 
 $title_mobileFontSize: 1.1rem;
 $title_desktopFontSize: 1.55rem;
 
 $main_mobileMaxWidth: none;
 $main_desktopMaxWidth: 25.4rem;
+
+$sideMargins_mobile: 0.1rem;
 
 .main {
   background-color: $backgroundColor;
@@ -30,7 +32,7 @@ $main_desktopMaxWidth: 25.4rem;
   }
   // padding: 0.8rem 0.8rem 0.3rem 0.9rem;
   min-height: 8rem;
-  margin: 0 1rem $bottomMargin 0;
+  margin: 0 $sideMargins_mobile $bottomMargin $sideMargins_mobile;
   max-width: $main_mobileMaxWidth;
   overflow: hidden; // so the image is clipped (has round corners, etc)
 }
@@ -69,6 +71,7 @@ $main_desktopMaxWidth: 25.4rem;
   .main {
     min-width: 26rem;
     max-width: $main_desktopMaxWidth;
+    margin: 0 0.9rem 1rem 0.1rem;
   }
 
   .title {

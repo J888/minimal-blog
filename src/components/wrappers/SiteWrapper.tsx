@@ -3,6 +3,7 @@ import { Post } from "@/types/post/post";
 import Head from "next/head";
 import Footer from "../Footer";
 import NavBar from "../NavBar";
+import Spacer from "../utility/Spacer";
 
 interface Props {
   children: React.ReactNode;
@@ -33,6 +34,7 @@ const SiteWrapper = ({ children, conf, title, post, description }: Props) => {
           <div className={styles.siteContent}>
             {children}
           </div>
+        <Spacer size="sm"/>
         <Footer conf={conf}/>
       </div>
     </>

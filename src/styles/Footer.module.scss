@@ -2,12 +2,48 @@
   color: rgb(215, 162, 100);
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   justify-self: center;
   line-height: 0.02px;
   font-size: 0.87rem;
   border-top: solid #262626 0.2rem;
   padding: 1rem 0 1rem 1rem;
   margin: 1rem 0 0 0;
+}
+
+.contentFarLeft {
+  color: rgb(215, 162, 100);
+  display: flex;
+  flex-direction: column;
+  justify-self: center;
+  line-height: 0.02px;
+  font-size: 0.87rem;
+  padding: 1rem 0 1rem 1rem;
+  margin: 1rem 0 0 0;
+
+  flex-grow: 1;
+}
+
+.contentMiddle {
+  flex-grow: 1;
+}
+
+.contentFarRight {
+  flex-grow: 1;
+}
+
+.scrollToTopButton {
+  font-size: 0.9rem;
+  background-color: #393939;
+  border: solid #8a877e 0.3px;
+  border-radius: 0.4rem;
+  color: #f9e1b8;
+  padding: 0.3rem;
+  margin: 1.2rem 0 0 0;
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .socials {
@@ -39,3 +75,9 @@
   }
 }
 
+@media (min-width: 990px) {
+  .main {
+    flex-direction: row;
+    margin: 0 9rem 0 9rem;
+  }
+}

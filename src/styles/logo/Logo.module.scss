@@ -1,0 +1,19 @@
+.main {
+  font-size: 0.9rem;
+  background-color: #1c1c11;
+  width: max-content;
+  color: #eeefd7;
+  padding: 0.8rem;
+  border: 2.1px solid #f2eea8;
+  border-radius: 3px;
+  margin: 0.5rem;
+
+  transition: font-size 500ms;
+}
+
+@media (min-width: 700px) {
+  .main {
+    font-size: 1.3rem;
+    
+  }
+}
