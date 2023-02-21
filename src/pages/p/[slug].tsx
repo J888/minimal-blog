@@ -27,9 +27,9 @@ const Post = ({ conf, post }: Props) => {
 
       <h1 className={styles.title}>{metadata.title}</h1>
       <span className={styles.description}>{metadata.description}</span>
-      <Spacer size="xxs"/>
+      <Spacer size="xs"/>
       
-      <div style={{width: '30rem'}}>
+      <div style={{width: 'fit-content'}}>
         <TagGroup tags={metadata.tags?.map(t => t.replace(/ /g, '') ) }/>
 
       </div>
