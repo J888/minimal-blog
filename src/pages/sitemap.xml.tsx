@@ -24,7 +24,9 @@ const SiteMap = () => {
 export const getServerSideProps = async ({ req, res }: any) => {
   const posts: Post[] = getPostsFromLocation();
 
-  const baseUrl = req.headers.host;
+  const baseUrl = req.headers.host || req.headers.authority;
+  console.log('req.headers: ',req.headers)
+  console.log('posts: ',posts)
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
     <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
       <url>
