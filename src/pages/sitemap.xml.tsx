@@ -59,7 +59,11 @@ export const getServerSideProps = async ({ req, res }: any) => {
 
   } catch (ex) {
     res.setHeader("Content-Type", "text/xml");
-    res.write(ex);
+    try {
+      res.write((ex as any).toString());
+    } catch {
+      res.write('could not write the exception..');
+    }
     res.end();
   }
   return {
