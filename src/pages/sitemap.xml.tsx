@@ -56,14 +56,15 @@ export const getServerSideProps = async ({ req, res }: any) => {
     res.write(sitemap);
     res.end();
   
-    return {
-      props: {},
-    };
+
   } catch (ex) {
     res.setHeader("Content-Type", "text/xml");
     res.write(ex);
     res.end();
   }
+  return {
+    props: {},
+  };
   
 };
 
