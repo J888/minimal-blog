@@ -20,7 +20,7 @@ const All = ({ conf, posts }: Props) => {
     <div className={styles.compactPostList}>
       {
         posts.map((p: Post, i: number) => {
-          return <Link key={`all-p-${i}`} href={`/p/${p.metadata.slug}`}>
+          return <Link key={`all-p-${i}`} href={`/${conf.postSettings.slugPrefix}/${p.metadata.slug}`}>
             <ListItemCompact post={p}/>
           </Link>
         })

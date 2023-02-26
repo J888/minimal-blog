@@ -35,7 +35,7 @@ const Home = ({ conf, posts }: Props) => {
           <Spacer size="xxs" />
           <div className={styles.postList}>
             {posts.map((post: any, i: number) => (
-              <Link href={"/p/" + post.metadata.slug} key={`linktopost-${i}`}
+              <Link href={`/${conf.postSettings.slugPrefix}/` + post.metadata.slug} key={`linktopost-${i}`}
                     onClick={() => {
                       gaEvent(`post_list_item_click`, {slug: post.metadata.slug});
                     }}>

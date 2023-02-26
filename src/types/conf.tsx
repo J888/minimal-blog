@@ -16,7 +16,11 @@ export interface Configuration {
     }
     links: NavLink[];
   };
+  postSettings: {
+    slugPrefix: string;
+  }
   site: {
+    baseUrl: string;
     name: string;
   };
   socials: {
