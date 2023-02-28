@@ -12,15 +12,16 @@ interface Props {
 const Logo = ({ conf, hideBorder }: Props) => {
   
   return (
-   
+    <Link href={'/'} className={styles.siteLogo} onClick={() => {
+      gaEvent(`nav_logo_click`, {});
+    }}>
     <div className={styles.main} style={hideBorder ? {border: 'none'}: {}}>
 
-      <Link href={'/'} className={styles.siteLogo} onClick={() => {
-        gaEvent(`nav_logo_click`, {});
-      }}>
+
         {conf.site.name}
-      </Link>
     </div>
+    </Link>
+
   );
 }
 

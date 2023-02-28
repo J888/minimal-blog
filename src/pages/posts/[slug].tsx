@@ -80,7 +80,7 @@ const Post = ({ conf, post }: Props) => {
                 {part.body}
               </ReactMarkdown>
             );
-          } else if (part.type === 'IMAGE') {
+          } else if (part.type === 'IMAGE' && !part.hideOnPostBody) {
             return (
       
               <div style={{position: 'relative', height: `60vw`, maxHeight: `40rem`}}
