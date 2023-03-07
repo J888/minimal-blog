@@ -5,14 +5,14 @@ const {
 const yaml = require('js-yaml');
 const fs = require('fs');
 const BUILD_TIME_CONF_PATH = `tmp/conf.yml`;
-const LOCAL_PATH_MISSING_ERROR = `\n\n\n\n>>>>>>>> LOCAL_PATH env var required <<<<<<<<\n\n\n\n`;
+const CONF_PATH_MISSING_ERROR = `\n\n\n\n>>>>>>>> CONF_PATH env var required <<<<<<<<\n\n\n\n`;
 
 const getConf = (isDevMode) => {
-  if (isDevMode&& !process.env.LOCAL_PATH) {
-    throw new Error(LOCAL_PATH_MISSING_ERROR);
+  if (isDevMode&& !process.env.CONF_PATH) {
+    throw new Error(CONF_PATH_MISSING_ERROR);
   }
 
-  const confFilePath = isDevMode ? `${process.env.LOCAL_PATH}/conf.yml` : BUILD_TIME_CONF_PATH;
+  const confFilePath = isDevMode ? process.env.CONF_PATH : BUILD_TIME_CONF_PATH;
 
   try {
     return yaml.load(fs.readFileSync(confFilePath, 'utf8'));

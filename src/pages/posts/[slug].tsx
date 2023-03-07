@@ -1,5 +1,4 @@
 import Spacer from "@/components/utility/Spacer";
-import SiteWrapper from "@/components/wrappers/SiteWrapper";
 import { getConf, getPostBySlug, getPostsFromLocation } from "@/util/dataUtil";
 import styles from '@/styles/pages/Slug.module.scss';
 import React from "react";
@@ -12,6 +11,8 @@ import TagGroup from "@/components/tagging/TagGroup";
 import Image from "next/image";
 import { Configuration } from "@/types/conf";
 import { Post } from "@/types/post/post";
+import FixedLeftContentWrapper from "@/components/wrappers/FixedLeftContentWrapper";
+import PlainBox from "@/components/box/PlainBox";
 
 type Props = {
   conf: Configuration;
@@ -20,8 +21,19 @@ type Props = {
 
 const Post = ({ conf, post }: Props) => {
   let metadata = post.metadata;
-  return <SiteWrapper conf={conf} title={metadata.title + ' | ' + conf.site.name} post={post}>
-    <Spacer size="sm"/>
+  let { notes } = metadata;
+
+  return <FixedLeftContentWrapper conf={conf} title={metadata.title + ' | ' + conf.site.name} post={post}
+         leftSidebarContent={
+          notes?.map((note, index) => (
+            <>
+              <PlainBox key={`post-note-${index}`} style={{marginLeft: '10%'}}>
+                {note}
+              </PlainBox>
+              <Spacer size="sm"/>
+            </>
+          ))
+         }>
 
     <div className={styles.titleDescContainer}>
 
@@ -108,13 +120,13 @@ const Post = ({ conf, post }: Props) => {
     <Spacer size="sm"/>
     <span className={styles.inCategory}>In category: {post.metadata.category}</span>
 
-  </SiteWrapper>;
+  </FixedLeftContentWrapper>;
 };
 
 export async function getStaticProps({ params, preview = false, previewData }: any) {
   const slug: string = params.slug;
-  const post = getPostBySlug(slug);
-  const conf = getConf();
+  const post: Post | undefined = await getPostBySlug(slug);
+  const conf: Configuration | {} = await getConf();
 
   return {
     props: {
@@ -125,7 +137,7 @@ export async function getStaticProps({ params, preview = false, previewData }: a
 }
 
 export async function getStaticPaths() {
-  const posts = getPostsFromLocation();
+  const posts: Post[] = await getPostsFromLocation();
 
   return {
     paths: posts.map(p => ({ params: { slug: p.metadata.slug } })),

@@ -1,4 +1,4 @@
-import styles from "@/styles/wrappers/SiteWrapper.module.scss";
+import styles from "@/styles/wrappers/FixedLeftContentWrapper.module.scss";
 import { Post } from "@/types/post/post";
 import Head from "next/head";
 import Footer from "../Footer";
@@ -7,13 +7,21 @@ import Spacer from "../utility/Spacer";
 
 interface Props {
   children: React.ReactNode;
+  leftSidebarContent?: any;
   conf: any;
   description?: string;
   title?: string;
   post?: Post;
 }
 
-const SiteWrapper = ({ children, conf, title, post, description }: Props) => {
+const FixedLeftContentWrapper = ({
+  children,
+  leftSidebarContent,
+  conf,
+  title,
+  post,
+  description
+}: Props) => {
   return (
     <>
       <Head>
@@ -30,15 +38,27 @@ const SiteWrapper = ({ children, conf, title, post, description }: Props) => {
         </style>
       </Head>
       <div className={styles.main}>
-        <NavBar conf={conf}/>
-          <div className={styles.siteContent}>
-            {children}
+        {/* <div className={styles.fixedLeftSidebar}>
+          <div className={styles.fixedLeftSidebarInner}>
+            {leftSidebarContent}
           </div>
+        </div> */}
+        <NavBar conf={conf}/>
+        <main className={styles.content}>
+          {children}
+        </main>
         <Spacer size="sm"/>
-        <Footer conf={conf}/>
+        <div className={styles.fixedLeftSidebar}>
+          <div className={styles.fixedLeftSidebarInner}>
+            {leftSidebarContent}
+          </div>
+        </div>
+        <div className={styles.footerContainer}>
+          <Footer conf={conf}/>
+        </div>
       </div>
     </>
   );
 };
 
-export default SiteWrapper;
+export default FixedLeftContentWrapper;

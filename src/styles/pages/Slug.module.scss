@@ -33,7 +33,6 @@ $body_desktopLineHeight: 1.8rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: 0 4vw 0 4vw;
 }
 
 .title {
@@ -115,7 +114,7 @@ $body_desktopLineHeight: 1.8rem;
   .body {
     font-size: $body_desktopFontSize;
     line-height: $body_desktopLineHeight;
-    margin: 0 $body_desktopRightMargin 0 $body_desktopLeftMargin;
+    // margin: 0 $body_desktopRightMargin 0 $body_desktopLeftMargin;
   }
 
   .title {

@@ -1,11 +1,10 @@
-import SiteWrapper from "@/components/wrappers/SiteWrapper";
 import { getConf, getPostsFromLocation } from "@/util/dataUtil";
-import styles from '@/styles/All.module.scss';
+import styles from "@/styles/All.module.scss";
 import React from "react";
 import { Configuration } from "@/types/conf";
 import { Post } from "@/types/post/post";
 import ListItemCompact from "@/components/list/ListItemCompact";
-import Link from "next/link";
+import FixedLeftContentWrapper from "@/components/wrappers/FixedLeftContentWrapper";
 
 type Props = {
   conf: Configuration;
@@ -13,32 +12,38 @@ type Props = {
 };
 
 const All = ({ conf, posts }: Props) => {
-
-  return <SiteWrapper conf={conf} title={'All' + ' | ' + conf.site.name} description={`All posts from ${conf.site.name}`}>
-    <h2 className={styles.pageHeading}>ALL POSTS</h2>
-    <p className={styles.postCount}>{posts.length} total</p>
-    <div className={styles.compactPostList}>
-      {
-        posts.map((p: Post, i: number) => {
-          return <Link key={`all-p-${i}`} href={`/${conf.postSettings.slugPrefix}/${p.metadata.slug}`}>
-            <ListItemCompact post={p}/>
-          </Link>
-        })
-      }
-    </div>
-
-  </SiteWrapper>;
+  return (
+    <FixedLeftContentWrapper
+      conf={conf}
+      title={"All" + " | " + conf.site.name}
+      description={`All posts from ${conf.site.name}`}
+    >
+      <h2 className={styles.pageHeading}>ALL</h2>
+      <p className={styles.postCount}>Showing {posts.length} posts</p>
+      <div className={styles.compactPostList}>
+        {posts.map((p: Post, i: number) => {
+          return (
+            <div key={`all-p-${i}`}>
+              <ListItemCompact post={p} />
+            </div>
+          );
+        })}
+      </div>
+    </FixedLeftContentWrapper>
+  );
 };
 
-export async function getStaticProps({ params, preview = false, previewData }: any) {
-
+export async function getStaticProps({
+  params,
+  preview = false,
+  previewData,
+}: any) {
   return {
     props: {
-      conf: getConf(),
-      posts: getPostsFromLocation(),
+      conf: await getConf(),
+      posts: await getPostsFromLocation(),
     },
   };
 }
-
 
 export default All;

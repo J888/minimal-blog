@@ -1,0 +1,95 @@
+$siteContent_desktop_marginLeft: 14vw;
+$siteContent_mobile_marginLeft: 0.2rem;
+
+$siteContent_desktop_marginRight: 21vw;
+$siteContent_mobile_marginRight: 0.2rem;
+
+.main {
+
+}
+
+.footerContainer {
+  margin: 0px 30px 0 30px;
+}
+
+/** This is the dynamic content on the site */
+.content {
+  touch-action: pan-y pinch-zoom;
+  margin: 120px 4vw 0 4vw;
+}
+
+/** This is a left sidebar that is fixed to the document */
+.fixedLeftSidebar {
+  // display: none;
+  width: 100%;
+  // position: fixed;
+  bottom: 0;
+  left: 0;
+  top: 90px;
+  background-color: rgb(36, 33, 30);
+  padding: 1rem 0 0 0.7rem;
+}
+
+.fixedLeftSidebarInner {
+  padding: 0 7vw 0 4vw;
+  // width: 90%;
+  // width:100%
+}
+
+@media (min-width: 700px) {
+  .footerContainer {
+    margin: 0px 30px 0 290px;
+  }
+  
+  /** This is the dynamic content on the site */
+  .content {
+    touch-action: pan-y pinch-zoom;
+    margin: 120px 4vw 0 385px;
+  }
+  
+  /** This is a left sidebar that is fixed to the document */
+  .fixedLeftSidebar {
+    // height: 100%;
+    display: block;
+  
+    width: 350px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    top: 90px;
+    background-color: rgb(36, 33, 30);
+    padding: 1rem 0 0 0.7rem;
+    
+    overflow-y: scroll;
+  
+    &:hover {
+      // width: 370px;
+      &::-webkit-scrollbar {
+        display:block;
+        background: rgb(101, 96, 96);
+        width: 10px;
+      }
+      &::-webkit-scrollbar-thumb {
+        background-color: rgb(153, 153, 157);    /* color of the scroll thumb */
+        border-radius: 20px;       /* roundness of the scroll thumb */
+        // border: 3px solid rgb(146, 115, 89);  /* creates padding around scroll thumb */
+      }
+      &::-webkit-scrollbar-track {
+        background: rgb(36, 36, 36); /* color of the tracking area */
+    
+      }
+    }
+    
+    // UNCOMMENT ALL THIS TO HIDE SCROLLBAR COMPLETELY
+    -ms-overflow-style: none; /* for Internet Explorer, Edge */
+    scrollbar-width: none; /* for Firefox */
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+  
+  .fixedLeftSidebarInner {
+    padding: 0;
+    width:340px;
+  }
+}

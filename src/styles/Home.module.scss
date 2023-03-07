@@ -1,10 +1,22 @@
 .main {
-  display: flex;
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
-
   touch-action: pan-y pinch-zoom;
+}
+
+.leftContent {
+  height: 100%;
+  width: 350px;
+  position:fixed;
+  left: 0;
+  top: 90px;
+  background-color: rgb(59, 59, 59);
+}
+
+.middleContent {
+  height: 100%;
+  margin: 70px 0 0 365px;
 }
 
 .postList {
@@ -51,8 +63,7 @@
         padding: 0;
       }
     }
-  }
-  
+  } 
 }
 
 

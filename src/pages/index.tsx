@@ -5,10 +5,12 @@ import Spacer from "@/components/utility/Spacer";
 import SectionHeading from "@/components/SectionHeading";
 import { getConf, getFrontPagePosts } from "@/util/dataUtil";
 import Link from "next/link";
-import SiteWrapper from "@/components/wrappers/SiteWrapper";
 import { Configuration } from "@/types/conf";
 import { Post } from "@/types/post/post";
 import { gaEvent } from "@/util/gaUtil";
+import FixedLeftContentWrapper from "@/components/wrappers/FixedLeftContentWrapper";
+import ListWithHeading from "@/components/list/ListWithHeading";
+import HorizontalDivider from "@/components/divider/HorizontalDivider";
 
 interface Props {
   conf: Configuration;
@@ -17,47 +19,55 @@ interface Props {
 
 const Home = ({ conf, posts }: Props) => {
   return (
-    <SiteWrapper conf={conf} title={'Home' + ' | ' + conf.site.name} description={`The homepage of ${conf.site.name}`}>
+    <FixedLeftContentWrapper conf={conf} title={'Home' + ' | ' + conf.site.name} description={`The homepage of ${conf.site.name}`}
+      leftSidebarContent={
+        <div>
+          <ListWithHeading posts={
+            posts.filter((p) => p.metadata.category?.toLowerCase() === 'googleanalytics')
+          } headingText={"Google Analytics"} headingStyles={{fontSize: '1.3rem'}}/>
+          <HorizontalDivider/>
+          <ListWithHeading posts={
+            posts.filter((p) => p.metadata.category?.toLowerCase() === 'commandline')
+          } headingText={"Commandline Tips"} headingStyles={{fontSize: '1.3rem'}}/>
+          <HorizontalDivider/>
+          <ListWithHeading posts={
+            posts.filter((p) => p.metadata.category?.toLowerCase() === 'algorithms')
+          } headingText={"Algorithms"} headingStyles={{fontSize: '1.3rem'}}/>
+          <HorizontalDivider/>
+          <ListWithHeading posts={posts} headingText={"All"} headingStyles={{fontSize: '1.3rem'}}/>
+        </div>
+      }>
       <Spacer size="xxs" />
 
       <main className={styles.main}>
-        {/* <div className={styles.siteDesc}>
-          {
-            conf.frontPage.paragraphs.map((p: String, i: number) => <p key={`para-${i}`}>{p}</p>)
-          }
 
-        </div> */}
-
-        <Spacer size="sm" />
-
-        <div>
-          <SectionHeading>Posts</SectionHeading>
-          <Spacer size="xxs" />
-          <div className={styles.postList}>
-            {posts.map((post: any, i: number) => (
-              <Link href={`/${conf.postSettings.slugPrefix}/` + post.metadata.slug} key={`linktopost-${i}`}
-                    onClick={() => {
-                      gaEvent(`post_list_item_click`, {slug: post.metadata.slug});
-                    }}>
-                <PostListItem
-                  post={post}
-                />
-              </Link>
-            ))}
-          </div>
+        <SectionHeading>Posts</SectionHeading>
+        <Spacer size="xxs" />
+        <div className={styles.postList}>
+          {posts.map((post: any, i: number) => (
+            <Link href={`/${conf.postSettings.slugPrefix}/` + post.metadata.slug} key={`linktopost-${i}`}
+                  onClick={() => {
+                    gaEvent(`post_list_item_click`, {slug: post.metadata.slug});
+                  }}>
+              <PostListItem
+                post={post}
+              />
+            </Link>
+          ))}
         </div>
       </main>
-    </SiteWrapper>
+    </FixedLeftContentWrapper>
   );
 };
 
 export async function getStaticProps(context: any) {
-
+  const conf = await getConf();
+  console.log('jhlog, the conf is', conf);
   try {
     return {
       props: {
-        conf: getConf(),
-        posts: getFrontPagePosts(),
+        conf,
+        posts: await getFrontPagePosts(),
       },
     };
   } catch (ex) {

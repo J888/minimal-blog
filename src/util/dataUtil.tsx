@@ -2,135 +2,77 @@ import { Configuration } from "@/types/conf";
 import { Post } from "@/types/post/post";
 
 const fs = require('fs');
-const path = require('path');
-const fm = require('front-matter');
 const yaml = require('js-yaml');
-const estimateReadingTime = require('reading-time');
-const BUILD_TIME_POSTS_DIR = `tmp/posts`;
-const BUILD_TIME_CONF_PATH = `tmp/conf.yml`;
-const LOCAL_PATH_MISSING_ERROR = `\n\n\n\n>>>>>>>> LOCAL_PATH env var required <<<<<<<<\n\n\n\n`;
+const POSTS_PATH_MISSING_ERROR = `\n\n\n\n>>>>>>>> POSTS_PATH env var required <<<<<<<<\n\n\n\n`;
+const CONF_PATH_MISSING_ERROR = `\n\n\n\n>>>>>>>> CONF_PATH env var required <<<<<<<<\n\n\n\n`;
 
-export const getConf = (): Configuration | {} => {
-  if (process.env.DEV_MODE && !process.env.LOCAL_PATH) {
-    throw new Error(LOCAL_PATH_MISSING_ERROR);
+const { S3Client, GetObjectCommand } = require("@aws-sdk/client-s3"); // CommonJS import
+const REGION = 'us-east-2';
+const client = new S3Client({
+  region: REGION,
+  credentials: {
+    accessKeyId: process.env.MY_AWS_KEY_ID,
+    secretAccessKey: process.env.MY_AWS_SECRET_ACCESS_KEY
   }
+});
 
-  const confFilePath = process.env.DEV_MODE ? `${process.env.LOCAL_PATH}/conf.yml` : BUILD_TIME_CONF_PATH;
+const getFileS3 = async (Key: string, ContentType = 'application/json'): Promise<string> => {
+  const commandConfig = { Bucket: process.env.AWS_BUCKET_NAME, Key, ContentType };
+  console.log(`Getting file with config`, commandConfig);
 
-  try {
-    return yaml.load(fs.readFileSync(confFilePath, 'utf8'));
-  } catch (e) {
-    console.error(e);
-    return {}
-  }
+  return new Promise(async (resolve, reject) => {
+    let response = await client.send(new GetObjectCommand(commandConfig));
+    let data: string = '';
+    const readStream = response.Body;
+
+    readStream.on('data', (chunk: any) => {
+      data += chunk;
+    });
+
+    readStream.on('close', () => {
+      resolve(data);
+    });
+  })
 }
 
-export const getFrontPagePosts = (): Post[] => {
-  return getPostsFromLocation().filter(p => !p.metadata.hideFromFrontPage);
-}
-
-export const getPostsFromLocation = (): Post[] => {
-  if (process.env.DEV_MODE && !process.env.LOCAL_PATH) {
-    throw new Error(LOCAL_PATH_MISSING_ERROR);
-  }
-
-  const postsDirectory = process.env.DEV_MODE ? `${process.env.LOCAL_PATH}/posts` : BUILD_TIME_POSTS_DIR;
-
-  let posts = [];
-  const postDirectories = fs.readdirSync(postsDirectory);
-
-  for (let i = 0; i < postDirectories.length; i++) {
-    let postDir = postDirectories[i];
-
-    let partsFiles = fs.readdirSync(path.join(postsDirectory, postDir), 'utf8');
-    let post: Post = {
-      metadata: {},
-      parts: []
-    };
-
-    // collect all the parts
-    for (let k = 0; k < partsFiles.length; k++) {
-      let partFile = partsFiles[k];
-  
-      let fileContents = fs.readFileSync(path.join(postsDirectory, postDir, partFile), 'utf8');
-
-      // md file
-      if (partFile.endsWith('.md')) {
-
-        // the first part file will always contain the front matter
-        if (partFile === 'p1.md') {
-
-          let parsed = fm(fileContents);
-          let readTime;
-          let estimatedReadMins = estimateReadingTime(parsed.body).minutes;
-          if (estimatedReadMins < 1) {
-            readTime = '< 1 min read'
-          } else {
-            readTime = estimateReadingTime(parsed.body).text
-          }
-          
-          post.metadata = {
-            hideFromFrontPage: parsed.attributes.hideFromFrontPage || false,
-            tags: parsed.attributes.tags?.split(',') || [],
-            title: parsed.attributes.title,
-            category: parsed.attributes.category,
-            createdAt: parsed.attributes.createdAt,
-            description: parsed.attributes.description,
-            slug: parsed.attributes.slug,
-            readTime,
-            ...post.metadata
-          };
-
-          post.parts.push({
-            type: 'MARKDOWN',
-            body: parsed.body,
-          });
-        } else {
-          post.parts.push({
-            type: 'MARKDOWN',
-            body: fileContents,
-          });
-        }
- 
-      } else if (partFile.endsWith('.yml')) {
-        let partYml = yaml.load(fileContents);
-        post.parts.push(partYml);
-
-        if (partYml.type === `IMAGE` && !post.metadata.mainImg) {
-          post.metadata.mainImg = partYml.url;
-        }
-      }
-    }
-
-    // if there is no image in this article, we need to add the default
-    // TODO: make this override-able from the post metadata itself... or just add an image to every post as a rule
-    if (!post.metadata.mainImg) {
-      post.metadata.mainImg = (getConf() as Configuration).defaults.post.displayImage.url;
-    }
-
-    posts.push(post);
-  }
-
-  // sort by date (most recently created will be first in the list)
-  posts.sort((a,b) => {
-    let aCreatedAt = a.metadata.createdAt as string;
-    let bCreatedAt = b.metadata.createdAt as string;
-
-    if (new Date(aCreatedAt) < new Date(bCreatedAt)) {
-      return 1;
-    }
-
-    if (new Date(aCreatedAt) > new Date(bCreatedAt)) {
-      return -1;
-    }
-
-    return 0;
-  });
-
+export const getPostsS3 = async (): Promise<Post[]> => {
+  const posts = JSON.parse(await getFileS3('posts/posts.json'));
+  console.log(`--getPostsS3-- posts:`, posts);
   return posts;
 }
 
-export const getPostBySlug = (slug: String): Post | undefined => {
-  const posts = getPostsFromLocation();
-  return posts.find(p => p.metadata.slug === slug)
+export const getConf = async (): Promise<Configuration | {}> => {
+  if (process.env.DEV_MODE) {
+    if (!process.env.CONF_PATH) {
+      throw new Error(CONF_PATH_MISSING_ERROR);
+    }
+    return yaml.load(fs.readFileSync(process.env.CONF_PATH, 'utf8'))
+  } else {
+    return yaml.load(await getFileS3(`conf.yml`, `text/yaml`), 'utf8');
+  }
+}
+
+export const getFrontPagePosts = async (): Promise<Post[]> => {
+  return (await getPostsFromLocation()).filter(p => !p.metadata.hideFromFrontPage);
+}
+
+export const getPostsFromLocation = async (): Promise<Post[]> => {
+  if (process.env.DEV_MODE) {
+    if (!process.env.POSTS_PATH) {
+      throw new Error(POSTS_PATH_MISSING_ERROR);
+    }
+    return JSON.parse(fs.readFileSync(process.env.POSTS_PATH));
+  } else {
+    return await getPostsS3();
+  }
+}
+
+export const getPostBySlug = async (slug: string): Promise<Post | undefined> => {
+  const posts = await getPostsFromLocation();
+  return posts.find(p => p.metadata.slug === slug);
+}
+
+export const getPostsByTag = async (tag: string): Promise<Post[]> => {
+  const posts = await getPostsFromLocation();
+  return posts.filter(p => p.metadata.tags?.includes(tag) || p.metadata.tags?.map(t => t.toLowerCase()).includes(tag));
 }

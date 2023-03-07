@@ -5,45 +5,37 @@ $highlightColor: rgb(238, 238, 227);
 $bottomMargin: 1rem;
 .main {
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  background-color: $backgroundColor;
+  flex-direction: row;
   border-radius: 0.2rem;
-  border-left: solid #e5dfd4 3.9px;
-
-  // border-top: solid rgb(220, 214, 192) 0.1rem;
-  
   font-size: 0.77rem;
-
   transition: border-left-color 0.8s ease, background-color 0.4s ease;
 
   &:hover {
-    background-color: $adjustedBackgroundColor;
-    // border-left: solid $highlightColor 0.2rem;
-    // border-bottom: none;
-
     cursor: pointer;
   }
   padding: 0.1rem 0.2rem 0.3rem 0.3rem;
-  // min-height: 8rem;
   margin: 0 0.4rem $bottomMargin 0;
+}
+
+.rightSide {
+  margin: 0 0 0 0.4rem;
 }
 
 .desc {
   font-size: 0.7rem;
-  color:rgb(139, 118, 55);
+  color:rgb(177, 177, 175);
   margin: 0.6rem 0 0 0;
 }
 
 .title {
   font-family: 'Noto Serif', serif;
   font-size: 1rem;
-  color:rgb(104, 103, 103);
+  color:rgb(231, 231, 231);
   margin:0;
 }
 
 .date {
-  color:rgb(172, 143, 48);
+  color:rgb(145, 145, 145);
   margin: 0.8rem 0 0 0;
   font-size: 0.65rem;
 }
@@ -56,7 +48,7 @@ $bottomMargin: 1rem;
 
 @media (min-width: 700px) {
   .main {
-    min-width: 26rem;
+    // min-width: 26rem;
 
   }
 }

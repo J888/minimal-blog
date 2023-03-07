@@ -1,5 +1,7 @@
 import { ImagePart, MarkdownPart } from "./part";
 
+type Note = string;
+
 export interface PostMetadata {
   hideFromFrontPage?: boolean;
   tags?: string[];
@@ -10,6 +12,7 @@ export interface PostMetadata {
   slug?: string;
   readTime?: string;
   mainImg?: string;
+  notes?: Note[];
 }
 
 export interface Post {

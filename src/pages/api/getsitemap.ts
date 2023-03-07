@@ -2,7 +2,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3"; // CommonJS import
 import fs from 'fs';
-import path from 'path';
 const REGION = 'us-east-2';
 const client = new S3Client({
   region: REGION,
@@ -36,12 +35,12 @@ const getSitemapS3 = async (): Promise<string> => {
 }
 
 const getSiteMapLocalFs = (): string => {
-  if (process.env.DEV_MODE && !process.env.LOCAL_PATH) {
-    throw new Error('LOCAL_PATH env var must be set');
+  if (process.env.DEV_MODE && !process.env.SITEMAP_PATH) {
+    throw new Error('SITEMAP_PATH env var must be set');
   }
 
   try {
-    return fs.readFileSync(path.join(process.env.LOCAL_PATH || '', 'generated', 'sitemap.xml'), 'utf8')
+    return fs.readFileSync(process.env.SITEMAP_PATH || '', 'utf8')
   } catch (e) {
     console.error(e);
     return ''

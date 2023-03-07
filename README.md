@@ -42,3 +42,4 @@ $ yarn run start
 ### Todo
 - make the theme configurable
 - make a control panel for the config
+- Make navbar burger only a thing for mobile
