@@ -39,7 +39,9 @@ const NavBar = ({ conf }: NavBarProps) => {
           setMenuExpanded(!menuExpanded);
         }}
       >
+        <div className={styles.burgerStack}>
         <BurgerMenu transformed={menuExpanded} />
+        </div>
         <div className={styles.dropdownMenu}>
           {menuExpanded && (
             <div className={styles.siteLinksContainer}>
