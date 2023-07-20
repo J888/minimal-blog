@@ -24,6 +24,7 @@ const Post = ({ conf, post }: Props) => {
   let metadata = post.metadata;
   let { notes } = metadata;
   const appTheme = useContext(ThemeContext);
+  const postDate = (metadata.updatedAt as string) || (metadata.createdAt as string);
 
   return <FixedLeftContentWrapper conf={conf} title={metadata.title + ' | ' + conf.site.name} post={post}
          leftSidebarContent={
@@ -56,7 +57,7 @@ const Post = ({ conf, post }: Props) => {
       <Spacer size="xxs"/>
 
       <div>
-        <AiTwotoneCalendar style={{fontSize: '1.2rem'}}/> <span className={styles.date}>{new Date(metadata.createdAt as string).toDateString()}</span>
+        <AiTwotoneCalendar style={{fontSize: '1.2rem'}}/> <span className={styles.date}>{new Date(postDate).toDateString()}</span>
       </div>
       
     

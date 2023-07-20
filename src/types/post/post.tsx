@@ -8,6 +8,7 @@ export interface PostMetadata {
   title?: string;
   category?: string;
   createdAt?: string;
+  updatedAt?: string;
   description?: string;
   slug?: string;
   readTime?: string;
