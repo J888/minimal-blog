@@ -3,7 +3,7 @@ import { Post } from "@/types/post/post";
 
 const fs = require('fs');
 const yaml = require('js-yaml');
-const POSTS_PATH_MISSING_ERROR = `\n\n\n\n>>>>>>>> POSTS_PATH env var required <<<<<<<<\n\n\n\n`;
+const POSTS_PATH_MISSING_ERROR = `\n\n\n\n>>>>>>>> POSTS_JSON_PATH env var required <<<<<<<<\n\n\n\n`;
 const CONF_PATH_MISSING_ERROR = `\n\n\n\n>>>>>>>> CONF_PATH env var required <<<<<<<<\n\n\n\n`;
 
 const { S3Client, GetObjectCommand } = require("@aws-sdk/client-s3"); // CommonJS import
@@ -58,10 +58,10 @@ export const getFrontPagePosts = async (): Promise<Post[]> => {
 
 export const getPostsFromLocation = async (): Promise<Post[]> => {
   if (process.env.DEV_MODE) {
-    if (!process.env.POSTS_PATH) {
+    if (!process.env.POSTS_JSON_PATH) {
       throw new Error(POSTS_PATH_MISSING_ERROR);
     }
-    return JSON.parse(fs.readFileSync(process.env.POSTS_PATH));
+    return JSON.parse(fs.readFileSync(process.env.POSTS_JSON_PATH));
   } else {
     return await getPostsS3();
   }

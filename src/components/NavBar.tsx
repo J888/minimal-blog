@@ -2,10 +2,11 @@ import styles from "@/styles/NavBar.module.scss";
 import { Configuration, NavLink } from "@/types/conf";
 import { gaEvent } from "@/util/gaUtil";
 import Link from "next/link";
-import { useState } from "react";
+import { CSSProperties, useContext, useState } from "react";
 import BurgerMenu from "./icon/BurgerMenu";
 import Logo from "./logo/Logo";
 import NavBarItem from "./NavBarItem";
+import { ThemeContext } from "@/context/ThemeContext";
 
 interface NavBarProps {
   conf: Configuration;
@@ -13,9 +14,14 @@ interface NavBarProps {
 
 const NavBar = ({ conf }: NavBarProps) => {
   const [menuExpanded, setMenuExpanded] = useState(false);
-
+  const appTheme = useContext(ThemeContext);
+  const dropdownMenuStyles: CSSProperties = {
+    backgroundColor: appTheme.backgroundSecondary
+  };
   return (
-    <div className={styles.main}>
+    <div className={styles.main} style={{
+      backgroundColor: appTheme.navBackground,
+    }}>
       <div className={styles.logo}>
         <Logo conf={conf} />
       </div>
@@ -44,7 +50,7 @@ const NavBar = ({ conf }: NavBarProps) => {
         </div>
         <div className={styles.dropdownMenu}>
           {menuExpanded && (
-            <div className={styles.siteLinksContainer}>
+            <div className={styles.siteLinksContainer} style={dropdownMenuStyles}>
               {conf.nav.links.map((link: NavLink, i: number) => (
                 <Link
                   href={link.href}

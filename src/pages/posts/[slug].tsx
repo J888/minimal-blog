@@ -1,7 +1,7 @@
 import Spacer from "@/components/utility/Spacer";
 import { getConf, getPostBySlug, getPostsFromLocation } from "@/util/dataUtil";
 import styles from '@/styles/pages/Slug.module.scss';
-import React from "react";
+import React, { useContext } from "react";
 import ReactMarkdown from "react-markdown";
 import { AiTwotoneCalendar } from "react-icons/ai";
 
@@ -13,6 +13,7 @@ import { Configuration } from "@/types/conf";
 import { Post } from "@/types/post/post";
 import FixedLeftContentWrapper from "@/components/wrappers/FixedLeftContentWrapper";
 import PlainBox from "@/components/box/PlainBox";
+import { ThemeContext } from "@/context/ThemeContext";
 
 type Props = {
   conf: Configuration;
@@ -22,6 +23,7 @@ type Props = {
 const Post = ({ conf, post }: Props) => {
   let metadata = post.metadata;
   let { notes } = metadata;
+  const appTheme = useContext(ThemeContext);
 
   return <FixedLeftContentWrapper conf={conf} title={metadata.title + ' | ' + conf.site.name} post={post}
          leftSidebarContent={
@@ -37,8 +39,10 @@ const Post = ({ conf, post }: Props) => {
 
     <div className={styles.titleDescContainer}>
 
-      <h1 className={styles.title}>{metadata.title}</h1>
-      <span className={styles.description}>{metadata.description}</span>
+      <h1 className={styles.title} style={{
+        color: appTheme.textHeadingPrimary,
+      }}>{metadata.title}</h1>
+      <span className={styles.description} style={{color: appTheme.textHeadingSecondary}}>{metadata.description}</span>
       <Spacer size="xs"/>
       
       <div style={{width: 'fit-content'}}>
@@ -60,7 +64,9 @@ const Post = ({ conf, post }: Props) => {
 
     <Spacer size="sm"/>
 
-    <div className={styles.body}>
+    <div className={styles.body} style={{
+      color: appTheme.textBody,
+    }}>
       {
         post.parts.map((part: any, i: number) => {
 
@@ -82,12 +88,19 @@ const Post = ({ conf, post }: Props) => {
                         {...props}
                       />
                     ) : (
-                      <code className={className ? className : styles.genericCode} {...props}>
+                      <code className={className ? className : styles.genericCode} {...props}
+                        style={{
+                          backgroundColor: appTheme.backgroundTertiary
+                        }}
+                      >
                         {children}
                       </code>
                     );
                   },
-                }}
+                  a: ({node, ...props}) => <a {...props} style={{
+                    color: appTheme.textLink
+                  }}></a>
+                }}     
               >
                 {part.body}
               </ReactMarkdown>

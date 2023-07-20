@@ -11,6 +11,8 @@ import { gaEvent } from "@/util/gaUtil";
 import FixedLeftContentWrapper from "@/components/wrappers/FixedLeftContentWrapper";
 import ListWithHeading from "@/components/list/ListWithHeading";
 import HorizontalDivider from "@/components/divider/HorizontalDivider";
+import { ThemeContext } from "@/context/ThemeContext";
+import { useContext } from "react";
 
 interface Props {
   conf: Configuration;
@@ -18,6 +20,8 @@ interface Props {
 }
 
 const Home = ({ conf, posts }: Props) => {
+  const appTheme = useContext(ThemeContext);
+
   return (
     <FixedLeftContentWrapper conf={conf} title={'Home' + ' | ' + conf.site.name} description={`The homepage of ${conf.site.name}`}
       leftSidebarContent={
@@ -39,11 +43,17 @@ const Home = ({ conf, posts }: Props) => {
       }>
       <Spacer size="xxs" />
 
-      <main className={styles.main}>
+      <main className={styles.main}
+      //  style={{
+      //   backgroundColor: appTheme.backgroundPrimary
+      //  }}
+       >
 
         <SectionHeading>Posts</SectionHeading>
         <Spacer size="xxs" />
-        <div className={styles.postList}>
+        <div className={styles.postList}
+             
+        >
           {posts.map((post: any, i: number) => (
             <Link href={`/${conf.postSettings.slugPrefix}/` + post.metadata.slug} key={`linktopost-${i}`}
                   onClick={() => {

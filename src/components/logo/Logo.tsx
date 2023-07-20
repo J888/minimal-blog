@@ -1,8 +1,9 @@
 import { Configuration } from '@/types/conf';
 import { gaEvent } from '@/util/gaUtil';
 import Link from 'next/link';
-import { useState } from 'react';
+import { CSSProperties, useContext, useState } from 'react';
 import styles from '@/styles/logo/Logo.module.scss';
+import { ThemeContext } from '@/context/ThemeContext';
 
 interface Props {
   conf: Configuration
@@ -10,14 +11,18 @@ interface Props {
 }
 
 const Logo = ({ conf, hideBorder }: Props) => {
-  
+  const appTheme = useContext(ThemeContext);
+  const logoStyle: CSSProperties = {
+    border: hideBorder ? 'none' : `2.1px solid ${appTheme.navBackground}`,
+    backgroundColor: appTheme.backgroundPrimary,
+    color: appTheme.textHeadingPrimary
+  };
+
   return (
     <Link href={'/'} className={styles.siteLogo} onClick={() => {
       gaEvent(`nav_logo_click`, {});
     }}>
-    <div className={styles.main} style={hideBorder ? {border: 'none'}: {}}>
-
-
+    <div className={styles.main} style={logoStyle}>
         {conf.site.name}
     </div>
     </Link>

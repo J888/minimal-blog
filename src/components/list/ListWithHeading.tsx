@@ -1,6 +1,7 @@
 import { Post } from "@/types/post/post";
-import { CSSProperties } from "react";
+import { CSSProperties, useContext } from "react";
 import ListItemCompact from "./ListItemCompact";
+import { ThemeContext } from "@/context/ThemeContext";
 
 type Props = {
   headingStyles?: CSSProperties;
@@ -9,18 +10,26 @@ type Props = {
 };
 
 const ListWithHeading = ({ headingStyles = {}, headingText, posts }: Props) => {
+  const appTheme = useContext(ThemeContext);
+  const headingStylesMerged = {
+    color: appTheme.textPrimary,
+    ...headingStyles
+  }
+
   return (
     <div className={''}>
-      <h2 style={headingStyles}>{headingText}</h2>
+      <h2 style={headingStylesMerged}>{headingText}</h2>
       {posts.map((post) => (
         <ListItemCompact
           post={post}
           displayMetadata={false}
           titleStyle={{
             fontSize: "0.8rem",
+            color: appTheme.textSecondary
           }}
           descriptionStyle={{
             fontSize: "0.7rem",
+            color: appTheme.textSecondarySubtitle
           }}
           imageSize={{
             width: 50,

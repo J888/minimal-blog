@@ -1,19 +1,7 @@
 ### Local Development
 
-The `LOCAL_PATH` env var must be set to a directory on your local system that has structure
-
-```
-conf.yml
-posts/
-   md_file1.md
-   md_file2.md
-   md_file3.md
-```
-
-Example:
-
 ```shell
-$ LOCAL_PATH=/Users/me/Documents/staticsitefiles/mysite yarn dev
+$ POSTS_JSON_PATH=/some/location/generated/posts/posts.json CONF_PATH=/some/location/conf.yml yarn dev
 ```
 
 ### Build For Deployment

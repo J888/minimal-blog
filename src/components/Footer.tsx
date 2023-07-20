@@ -1,29 +1,36 @@
 import styles from "@/styles/Footer.module.scss";
 import Logo from "./logo/Logo";
+import { CSSProperties, useContext } from "react";
+import { ThemeContext } from "@/context/ThemeContext";
 
 interface FooterProps {
   conf: any;
 }
 
 const Footer = ({ conf }: FooterProps) => {
+  const appStyle = useContext(ThemeContext);
+  const linkStyle: CSSProperties = {
+    color: appStyle.textLink
+  };
+
   return (
     <div className={styles.main}>
       <div className={styles.contentFarLeft}>
-        <p>
+        <p style={{color: appStyle.textPrimary}}>
           Ⓒ {conf.site.name} {new Date().getFullYear()}
         </p>
         <p>
-          <a href={conf.socials.linkedin} className={styles.socials}>
+          <a href={conf.socials.linkedin} className={styles.socials} style={linkStyle}>
             Connect on LinkedIn
           </a>
         </p>
         <p>
-          <a href={conf.socials.github} className={styles.socials}>
+          <a href={conf.socials.github} className={styles.socials} style={linkStyle}>
             Check out my GitHub
           </a>
         </p>
         <p>
-          <a href={conf.other.sourceCodeUrl} className={styles.socials}>
+          <a href={conf.other.sourceCodeUrl} className={styles.socials} style={linkStyle}>
             View source code
           </a>
         </p>
