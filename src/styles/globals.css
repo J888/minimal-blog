@@ -23,7 +23,7 @@ body {
 body {
   color: rgb(211, 210, 210);
   background: black;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Noto Sans', sans-serif;
 }
 
 a {

@@ -36,7 +36,7 @@ const FixedLeftContentWrapper = ({
         <link rel="icon" href="/favicon.ico" />
         <style>
           @import
-          url("https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap");
+          url("https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap");
 
           @import url("https://fonts.googleapis.com/css2?family=Ubuntu&family=Varela+Round&family=Noto+Serif&family=Martian+Mono&family=Merriweather&display=swap');
         </style>

@@ -13,6 +13,7 @@ $sideMargins_mobile: 0.1rem;
 
 .main {
   background-color: $backgroundColor;
+  box-shadow: 4px 3px 12px #e2e2e2;
   
   // border: solid rgb(189, 189, 189) 0.1rem;
   border-radius: 0.2rem;
@@ -24,6 +25,7 @@ $sideMargins_mobile: 0.1rem;
 
   &:hover {
     background-color: $adjustedBackgroundColor;
+    box-shadow: 4px 3px 12px #b3b3b3;
     opacity: 0.9;
     // border-left: solid $highlightColor 0.2rem;
     // border-bottom: #e8e8e8;
@@ -71,7 +73,7 @@ $sideMargins_mobile: 0.1rem;
   .main {
     min-width: 26rem;
     max-width: $main_desktopMaxWidth;
-    margin: 0 0.9rem 1rem 0.1rem;
+    margin: 0 2.2rem 3rem 0.1rem;
   }
 
   .title {
